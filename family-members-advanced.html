@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Members 2 Advanced - Memory Game</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-back: #000000;
+            --card-front: #ffcc00; 
+            --text-white: #ffffff;
+            --text-yellow: #ffcc00;
+            --border-yellow: #ffcc00;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--text-yellow); margin: 5px 0; }
+        p { color: var(--text-white); margin: 5px 0; font-size: 1.1rem; }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .card {
+            height: 150px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border: 2px solid var(--border-yellow);
+            border-radius: 10px;
+        }
+
+        /* A correção principal: 180deg */
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .card-back {
+            background-color: var(--card-back);
+            color: var(--text-yellow);
+            font-size: 2.5rem;
+        }
+
+        .card-front {
+            background-color: var(--card-front);
+            color: #000000;
+            transform: rotateY(180deg);
+            font-size: 0.9rem;
+        }
+
+        .emoji { font-size: 2rem; margin-bottom: 8px; }
+
+        .matched .card-inner {
+            border-color: #4CAF50;
+            opacity: 0.6;
+        }
+
+        button {
+            margin-top: 30px;
+            background: var(--text-yellow);
+            color: black;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Family Members 2 Advanced</h1>
+        <p>@freitasenglishclasses - Teacher: Priscila Freitas</p>
+    </header>
+
+    <div class="game-grid" id="grid"></div>
+
+    <button onclick="startGame()">Reset Game</button>
+
+    <script>
+        const vocabulary = [
+            { en: "Great grandparents", pt: "Bisavós", icon: "👵👴" },
+            { en: "Great grandson and Great granddaughter", pt: "Bisneto e Bisneta", icon: "👶" },
+            { en: "Great uncle and Great aunt", pt: "Tio avô e Tia avó", icon: "👴" },
+            { en: "First cousin and Second cousin", pt: "Primo de primeiro grau e segundo grau", icon: "🧒" },
+            { en: "Nephew and Niece", pt: "Sobrinho e Sobrinha", icon: "👦" },
+            { en: "Mother in law and Father in law", pt: "Sogra e Sogro", icon: "💍" },
+            { en: "Parents in law", pt: "Sogros", icon: "👪" },
+            { en: "Brother in law and Sister in law", pt: "Cunhado e Cunhada", icon: "🤝" },
+            { en: "Son in law", pt: "Genro", icon: "🤵" },
+            { en: "Fiancé and Fiancée", pt: "Noivo e Noiva", icon: "🥂" },
+            { en: "Partner", pt: "Parceiro", icon: "❤️" },
+            { en: "Godmother and Godfather", pt: "Madrinha e Padrinho", icon: "✨" },
+            { en: "Godchild", pt: "Afilhado", icon: "👼" },
+            { en: "Stepparents", pt: "Padrasto e Madrasta", icon: "🏠" },
+            { en: "Stepbrother and Stepsister", pt: "Irmão e Irmã de consideração", icon: "👫" },
+            { en: "Half brother and Half sister", pt: "Meio irmão e Meia irmã de sangue", icon: "🧬" },
+            { en: "Foster child", pt: "Filho adotivo", icon: "💟" },
+            { en: "An only child", pt: "Filho único", icon: "🧍" }
+        ];
+
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let canFlip = true;
+
+        function speak(text, isEnglish) {
+            window.speechSynthesis.cancel();
+            const msg = new SpeechSynthesisUtterance(text);
+            msg.lang = isEnglish ? 'en-US' : 'pt-BR';
+            window.speechSynthesis.speak(msg);
+        }
+
+        function startGame() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            flippedCards = [];
+            matchedPairs = 0;
+            canFlip = true;
+
+            let cardData = [];
+            vocabulary.forEach((item, index) => {
+                cardData.push({ text: item.en, type: 'en', id: index, icon: item.icon });
+                cardData.push({ text: item.pt, type: 'pt', id: index, icon: item.icon });
+            });
+
+            cardData.sort(() => Math.random() - 0.5);
+
+            cardData.forEach(data => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-back">?</div>
+                        <div class="card-front">
+                            <span class="emoji">${data.icon}</span>
+                            <span>${data.text}</span>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => handleFlip(card, data);
+                grid.appendChild(card);
+            });
+        }
+
+        function handleFlip(cardElement, data) {
+            if (!canFlip || cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
+
+            cardElement.classList.add('flipped');
+            speak(data.text, data.type === 'en');
+            flippedCards.push({ element: cardElement, data: data });
+
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            canFlip = false;
+            const [c1, c2] = flippedCards;
+
+            if (c1.data.id === c2.data.id && c1.data.type !== c2.data.type) {
+                c1.element.classList.add('matched');
+                c2.element.classList.add('matched');
+                flippedCards = [];
+                canFlip = true;
+                matchedPairs++;
+                if (matchedPairs === vocabulary.length) {
+                    setTimeout(() => alert('Congratulations! All pairs found!'), 500);
+                }
+            } else {
+                setTimeout(() => {
+                    c1.element.classList.remove('flipped');
+                    c2.element.classList.remove('flipped');
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1200);
+            }
+        }
+
+        // Pre-load voices
+        window.speechSynthesis.getVoices();
+        startGame();
+    </script>
+</body>
+</html>
