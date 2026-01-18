@@ -5,102 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Members 1 - Memory Game</title>
     <style>
-        :root {
-            --bg-color: #000000;
-            --card-back: #ffcc00; /* Amarelo */
-            --card-front: #1a1a1a; /* Preto */
-            --text-white: #ffffff;
-            --text-yellow: #ffcc00;
-            --border-color: #ffcc00;
+        :root { --bg-color: #000; --card-back: #ffcc00; --card-front: #1a1a1a; --text-white: #fff; --text-yellow: #ffcc00; }
+        body { background-color: var(--bg-color); color: var(--text-white); font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
+        h1 { color: var(--text-yellow); margin-bottom: 20px; text-align: center; }
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; width: 100%; max-width: 600px; }
+        .card { height: 140px; cursor: pointer; perspective: 1000px; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--text-yellow); box-sizing: border-box; padding: 5px; text-align: center; }
+        .card-back { background-color: var(--card-back); color: #000; font-size: 40px; font-weight: bold; }
+        .card-front { background-color: var(--card-front); transform: rotateY(180deg); }
+        .en-text { color: #fff; font-size: 16px; font-weight: bold; }
+        .pt-text { color: var(--text-yellow); font-size: 14px; margin-top: 5px; }
+        .btn-voltar { margin-top: 30px; padding: 10px 20px; background: var(--text-yellow); color: #000; text-decoration: none; border-radius: 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Family Members 1</h1>
+    <div class="game-grid" id="gameGrid"></div>
+    <a href="index.html" class="btn-voltar">Voltar ao Portal</a>
+
+    <script>
+        const familyData = [
+            { en: "Mother", pt: "Mãe", emoji: "👩" }, { en: "Father", pt: "Pai", emoji: "👨" },
+            { en: "Son", pt: "Filho", emoji: "👦" }, { en: "Daughter", pt: "Filha", emoji: "👧" },
+            { en: "Brother", pt: "Irmão", emoji: "👦" }, { en: "Sister", pt: "Irmã", emoji: "👧" }
+        ];
+
+        function speak(text, lang) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            window.speechSynthesis.speak(utterance);
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-white);
-            font-family: 'Segoe UI', Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
+        function createBoard() {
+            const grid = document.getElementById('gameGrid');
+            let deck = [];
+            familyData.forEach(item => {
+                deck.push({ ...item, type: 'en', label: item.en });
+                deck.push({ ...item, type: 'pt', label: item.pt });
+            });
+            deck.sort(() => 0.5 - Math.random());
+            deck.forEach(data => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-face card-back">?</div>
+                        <div class="card-face card-front">
+                            <span style="font-size:35px">${data.emoji}</span>
+                            <span class="${data.type === 'en' ? 'en-text' : 'pt-text'}">${data.label}</span>
+                        </div>
+                    </div>`;
+                card.addEventListener('click', () => {
+                    if (card.classList.contains('flipped')) return;
+                    card.classList.add('flipped');
+                    speak(data.label, data.type === 'en' ? 'en-US' : 'pt-BR');
+                });
+                grid.appendChild(card);
+            });
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--text-yellow);
-            padding-bottom: 10px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        h1 { color: var(--text-yellow); margin: 0; font-size: 1.8rem; }
-        .credits { font-size: 1rem; margin-top: 5px; font-weight: bold; }
-
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 15px;
-            max-width: 900px;
-            width: 100%;
-        }
-
-        .card {
-            height: 150px;
-            cursor: pointer;
-            perspective: 1000px;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid var(--border-color);
-            box-sizing: border-box;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .card-back {
-            background-color: var(--card-back);
-            color: #000;
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        .card-front {
-            background-color: var(--card-front);
-            transform: rotateY(180deg);
-        }
-
-        .emoji { font-size: 40px; margin-bottom: 10px; }
-        .label { font-weight: bold; font-size: 0.9rem; }
-        
-        .en-text { color: var(--text-white); }
-        .pt-text { color: var(--text-yellow); }
-
-        .controls { margin-top: 30px; }
-        button {
-            padding: 12px 30px;
-            background-color: var(--text-yellow);
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
+        createBoard();
+    </script>
+</body>
+</html>
