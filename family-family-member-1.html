@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Members 1 - Memory Game</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-back: #ffcc00; /* Amarelo */
+            --card-front: #1a1a1a; /* Preto */
+            --text-white: #ffffff;
+            --text-yellow: #ffcc00;
+            --border-color: #ffcc00;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--text-yellow);
+            padding-bottom: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 { color: var(--text-yellow); margin: 0; font-size: 1.8rem; }
+        .credits { font-size: 1rem; margin-top: 5px; font-weight: bold; }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .card {
+            height: 150px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--border-color);
+            box-sizing: border-box;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .card-back {
+            background-color: var(--card-back);
+            color: #000;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .card-front {
+            background-color: var(--card-front);
+            transform: rotateY(180deg);
+        }
+
+        .emoji { font-size: 40px; margin-bottom: 10px; }
+        .label { font-weight: bold; font-size: 0.9rem; }
+        
+        .en-text { color: var(--text-white); }
+        .pt-text { color: var(--text-yellow); }
+
+        .controls { margin-top: 30px; }
+        button {
+            padding: 12px 30px;
+            background-color: var(--text-yellow);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
