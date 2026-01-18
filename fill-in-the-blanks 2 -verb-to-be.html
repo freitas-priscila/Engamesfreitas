@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fill in the Blanks – Verb To Be</title>
+
+<style>
+body{
+    background:black;
+    color:white;
+    font-family:Arial, sans-serif;
+    padding:20px;
+}
+
+h1{
+    color:yellow;
+    text-align:center;
+}
+
+.prompt{
+    border:2px solid yellow;
+    padding:15px;
+    margin-bottom:20px;
+    max-width:900px;
+    margin-inline:auto;
+}
+
+.card{
+    border:1px solid yellow;
+    padding:15px;
+    margin:12px auto;
+    max-width:850px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.emoji{
+    font-size:26px;
+}
+
+input{
+    background:black;
+    color:yellow;
+    border:none;
+    border-bottom:2px solid yellow;
+    width:120px;
+    text-align:center;
+    font-size:18px;
+}
+
+.feedback{
+    font-weight:bold;
+}
+
+.ok{color:#00ff99;}
+.no{color:#ff5555;}
+
+.audio{
+    cursor:pointer;
+    font-size:22px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🧩 Fill in the Blanks – Verb To Be<br>@freitasenglishclasses</h1>
+
+<div class="prompt">
+<strong>Prompt:</strong><br>
+Use the correct form of <strong>Verb To Be</strong>:<br><br>
+<strong>'m not • aren't • isn't • is • Is • 're • are • Are • am • Am • not</strong><br><br>
+⚠️ Capital letters matter at the beginning of questions.
+</div>
+
+<!-- WITH PRONOUNS – NO CONTRACTIONS -->
+
+<div class="card">
+<span class="audio" onclick="speak('I am ready.')">🔊</span>
+<span class="emoji">😀</span>
+I <input id="q1"> ready.
+<span id="f1" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('She is not at home.')">🔊</span>
+<span class="emoji">🏠</span>
+She <input id="q2"> not at home.
+<span id="f2" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('Are you a teacher?')">🔊</span>
+<span class="emoji">🎓</span>
+<input id="q3"> you a teacher?
+<span id="f3" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('They are tired.')">🔊</span>
+<span class="emoji">😴</span>
+They <input id="q4"> tired.
+<span id="f4" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('He is late.')">🔊</span>
+<span class="emoji">⏰</span>
+He <input id="q5"> late.
+<span id="f5" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('We are not students.')">🔊</span>
+<span class="emoji">📚</span>
+We <input id="q6"> not students.
+<span id="f6" class="feedback"></span>
+</div>
+
+<!-- WITHOUT PRONOUNS – WITH CONTRACTIONS -->
+
+<div class="card">
+<span class="audio" onclick="speak('Paulo and Maria are not young.')">🔊</span>
+<span class="emoji">👴👵</span>
+Paulo and Maria <input id="q7"> young.
+<span id="f7" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('Anna is not happy.')">🔊</span>
+<span class="emoji">🙁</span>
+Anna <input id="q8"> happy.
+<span id="f8" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('The boys are friends.')">🔊</span>
+<span class="emoji">🤝</span>
+The boys <input id="q9"> friends.
+<span id="f9" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('My parents are not here.')">🔊</span>
+<span class="emoji">🏠</span>
+My parents <input id="q10"> here.
+<span id="f10" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('Lucas is tired.')">🔊</span>
+<span class="emoji">😓</span>
+Lucas <input id="q11"> tired.
+<span id="f11" class="feedback"></span>
+</div>
+
+<div class="card">
+<span class="audio" onclick="speak('The cats are not outside.')">🔊</span>
+<span class="emoji">🐱</span>
+The cats <input id="q12"> outside.
+<span id="f12" class="feedback"></span>
+</div>
+
+<script>
+const answers = {
+q1:"am",
+q2:"is",
+q3:"Are",
+q4:"are",
+q5:"is",
+q6:"are",
+q7:"aren't",
+q8:"isn't",
+q9:"'re",
+q10:"aren't",
+q11:"is",
+q12:"aren't"
+};
+
+for(let q in answers){
+document.getElementById(q).addEventListener("input",function(){
+let f=document.getElementById("f"+q.substring(1));
+if(this.value.trim()===answers[q]){
+f.textContent="✔";
+f.className="feedback ok";
+}else{
+f.textContent="✘";
+f.className="feedback no";
+}
+});
+}
+
+function speak(text){
+let u=new SpeechSynthesisUtterance(text);
+u.lang="en-US";
+speechSynthesis.speak(u);
+}
+</script>
+
+</body>
+</html>
