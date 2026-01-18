@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Memory Game – Occupations in English</title>
+
+<style>
+    body {
+        background-color: #000;
+        color: #FFD700;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    h1 {
+        margin: 20px 0 5px;
+    }
+
+    h2 {
+        font-weight: normal;
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .game-board {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 12px;
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .card {
+        background-color: #000;
+        border: 2px solid #FFD700;
+        height: 120px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        user-select: none;
+        color: #fff;
+    }
+
+    .card.revealed {
+        background-color: #FFD700;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .emoji {
+        font-size: 46px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🧠 Memory Game – Occupations in English</h1>
+<h2>@freitasenglishclasses</h2>
+<p>Click and listen 👂</p>
+
+<div class="game-board" id="gameBoard"></div>
+
+<script>
+const pairs = [
+    { word: "a teacher", emoji: "👩‍🏫" },
+    { word: "a doctor", emoji: "👨‍⚕️" },
+    { word: "a student", emoji: "🎓" },
+    { word: "an engineer", emoji: "🛠️" },
+    { word: "a chef", emoji: "👨‍🍳" },
+    { word: "an admin assistant", emoji: "🗂️" },
+    { word: "a welder", emoji: "🔥" },
+    { word: "a virtual assistant", emoji: "💻" },
+    { word: "an influencer", emoji: "📱" },
+    { word: "a content creator", emoji: "🎥" },
+    { word: "a writer", emoji: "✍️" },
+    { word: "a secretary", emoji: "📞" },
+    { word: "an agronomist", emoji: "🌱" },
+    { word: "a farmer", emoji: "🚜" }
+];
+
+let cards = [];
+pairs.forEach(pair => {
+    cards.push({ type: "word", content: pair.word, speak: pair.word });
+    cards.push({ type: "emoji", content: pair.emoji, speak: pair.word });
+});
+
+cards.sort(() => Math.random() - 0.5);
+
+const board = document.getElementById("gameBoard");
+let firstCard = null;
+let lockBoard = false;
+
+cards.forEach(cardData => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    card.addEventListener("click", () => {
+        if (lockBoard || card.classList.contains("revealed")) return;
+
+        card.classList.add("revealed");
+        card.innerHTML = cardData.type === "emoji"
+            ? `<span class="emoji">${cardData.content}</span>`
+            : cardData.content;
+
+        speak(cardData.speak);
+
+        if (!firstCard) {
+            firstCard = { card, data: cardData };
+        } else {
+            lockBoard = true;
+
+            if (firstCard.data.speak === cardData.speak &&
+                firstCard.card !== card) {
+                firstCard = null;
+                lockBoard = false;
+            } else {
+                setTimeout(() => {
+                    card.classList.remove("revealed");
+                    card.innerHTML = "";
+                    firstCard.card.classList.remove("revealed");
+                    firstCard.card.innerHTML = "";
+                    firstCard = null;
+                    lockBoard = false;
+                }, 1300);
+            }
+        }
+    });
+
+    board.appendChild(card);
+});
+
+function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utterance);
+}
+</script>
+
+</body>
+</html>
