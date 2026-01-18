@@ -1,71 +1,234 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Members 1 - Memory Game</title>
     <style>
-        :root { --bg-color: #000; --card-back: #ffcc00; --card-front: #1a1a1a; --text-white: #fff; --text-yellow: #ffcc00; }
-        body { background-color: var(--bg-color); color: var(--text-white); font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
-        h1 { color: var(--text-yellow); margin-bottom: 20px; text-align: center; }
-        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; width: 100%; max-width: 600px; }
-        .card { height: 140px; cursor: pointer; perspective: 1000px; }
-        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
-        .card.flipped .card-inner { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--text-yellow); box-sizing: border-box; padding: 5px; text-align: center; }
-        .card-back { background-color: var(--card-back); color: #000; font-size: 40px; font-weight: bold; }
-        .card-front { background-color: var(--card-front); transform: rotateY(180deg); }
-        .en-text { color: #fff; font-size: 16px; font-weight: bold; }
-        .pt-text { color: var(--text-yellow); font-size: 14px; margin-top: 5px; }
-        .btn-voltar { margin-top: 30px; padding: 10px 20px; background: var(--text-yellow); color: #000; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        :root {
+            --bg-color: #000000;
+            --card-back: #ffcc00; /* Amarelo */
+            --card-front: #1a1a1a; /* Preto */
+            --text-white: #ffffff;
+            --text-yellow: #ffcc00;
+            --border-color: #ffcc00;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--text-yellow);
+            padding-bottom: 10px;
+        }
+
+        h1 { color: var(--text-yellow); margin: 0; font-size: 2rem; }
+        .credits { font-size: 1.1rem; margin-top: 5px; }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .card {
+            height: 160px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--border-color);
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .card-back {
+            background-color: var(--card-back);
+            color: #000;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .card-front {
+            background-color: var(--card-front);
+            transform: rotateY(180deg);
+        }
+
+        .emoji { font-size: 40px; margin-bottom: 10px; }
+        .label { font-weight: bold; text-align: center; font-size: 0.95rem; }
+        
+        /* Cores solicitadas para as letras */
+        .en-text { color: var(--text-white); }
+        .pt-text { color: var(--text-yellow); }
+
+        button {
+            margin-bottom: 20px;
+            padding: 10px 25px;
+            background-color: var(--text-yellow);
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
-    <h1>Family Members 1</h1>
+
+    <header>
+        <h1>Family Members 1</h1>
+        <div class="credits">@freitasenglishclasses - Teacher: Priscila Freitas</div>
+    </header>
+
+    <button onclick="resetGame()">Restart Game</button>
+
     <div class="game-grid" id="gameGrid"></div>
-    <a href="index.html" class="btn-voltar">Voltar ao Portal</a>
 
     <script>
-        const familyData = [
-            { en: "Mother", pt: "Mãe", emoji: "👩" }, { en: "Father", pt: "Pai", emoji: "👨" },
-            { en: "Son", pt: "Filho", emoji: "👦" }, { en: "Daughter", pt: "Filha", emoji: "👧" },
-            { en: "Brother", pt: "Irmão", emoji: "👦" }, { en: "Sister", pt: "Irmã", emoji: "👧" }
+        const familyPairs = [
+            { en: "Mother / Mom", pt: "Mãe", emoji: "👩" },
+            { en: "Father / Dad / Daddy", pt: "Pai", emoji: "👨" },
+            { en: "Parents", pt: "Pais", emoji: "👫" },
+            { en: "Son", pt: "Filho", emoji: "👦" },
+            { en: "Daughter", pt: "Filha", emoji: "👧" },
+            { en: "Children", pt: "Filhos / Crianças", emoji: "🧒" },
+            { en: "Brother", pt: "Irmão", emoji: "👦" },
+            { en: "Sister", pt: "Irmã", emoji: "👧" },
+            { en: "Siblings", pt: "Irmãos (geral)", emoji: "🧑‍🤝‍🧑" },
+            { en: "Grandmother", pt: "Avó", emoji: "👵" },
+            { en: "Grandfather", pt: "Avô", emoji: "👴" },
+            { en: "Grandparents", pt: "Avós", emoji: "👴👵" },
+            { en: "Uncle", pt: "Tio", emoji: "👨‍💼" },
+            { en: "Aunt", pt: "Tia", emoji: "👩‍💼" },
+            { en: "Cousin", pt: "Primo(a)", emoji: "🧑" },
+            { en: "Husband", pt: "Marido", emoji: "🤵" },
+            { en: "Wife", pt: "Esposa", emoji: "👰" }
         ];
 
+        let cards = [];
+        let flippedCards = [];
+        let canFlip = true;
+
         function speak(text, lang) {
-            window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang;
+            utterance.lang = lang; // 'en-US' ou 'pt-BR'
+            utterance.rate = 0.9;
             window.speechSynthesis.speak(utterance);
         }
 
         function createBoard() {
             const grid = document.getElementById('gameGrid');
-            let deck = [];
-            familyData.forEach(item => {
-                deck.push({ ...item, type: 'en', label: item.en });
-                deck.push({ ...item, type: 'pt', label: item.pt });
+            grid.innerHTML = '';
+            cards = [];
+            
+            // Criamos dois cards para cada item da lista
+            familyPairs.forEach(item => {
+                cards.push({ ...item, type: 'en', display: item.en });
+                cards.push({ ...item, type: 'pt', display: item.pt });
             });
-            deck.sort(() => 0.5 - Math.random());
-            deck.forEach(data => {
+
+            // Embaralhar
+            cards.sort(() => Math.random() - 0.5);
+
+            cards.forEach((cardData, index) => {
                 const card = document.createElement('div');
                 card.classList.add('card');
+                card.dataset.index = index;
+                card.dataset.match = cardData.en; // Usamos o inglês como chave de match
+
                 card.innerHTML = `
                     <div class="card-inner">
                         <div class="card-face card-back">?</div>
                         <div class="card-face card-front">
-                            <span style="font-size:35px">${data.emoji}</span>
-                            <span class="${data.type === 'en' ? 'en-text' : 'pt-text'}">${data.label}</span>
+                            <span class="emoji">${cardData.emoji}</span>
+                            <span class="label ${cardData.type === 'en' ? 'en-text' : 'pt-text'}">
+                                ${cardData.display}
+                            </span>
                         </div>
-                    </div>`;
-                card.addEventListener('click', () => {
-                    if (card.classList.contains('flipped')) return;
-                    card.classList.add('flipped');
-                    speak(data.label, data.type === 'en' ? 'en-US' : 'pt-BR');
-                });
+                    </div>
+                `;
+
+                card.addEventListener('click', () => flipCard(card, cardData));
                 grid.appendChild(card);
             });
         }
+
+        function flipCard(cardElement, data) {
+            if (!canFlip || cardElement.classList.contains('flipped')) return;
+
+            cardElement.classList.add('flipped');
+            
+            // Pronúncia
+            const lang = data.type === 'en' ? 'en-US' : 'pt-BR';
+            speak(data.display, lang);
+
+            flippedCards.push({ element: cardElement, data: data });
+
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            canFlip = false;
+            const [card1, card2] = flippedCards;
+
+            if (card1.data.en === card2.data.en && card1.data.type !== card2.data.type) {
+                // Match deu certo
+                flippedCards = [];
+                canFlip = true;
+            } else {
+                // Errou
+                setTimeout(() => {
+                    card1.element.classList.remove('flipped');
+                    card2.element.classList.remove('flipped');
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1200);
+            }
+        }
+
+        function resetGame() {
+            window.speechSynthesis.cancel();
+            createBoard();
+        }
+
         createBoard();
     </script>
 </body>
