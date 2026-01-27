@@ -30,15 +30,15 @@
     <script>
         const cardsData = [
             { id: 1, type: 'situation', text: "You need something done very fast.", match: 1 },
-            { id: 1, type: 'solution', text: "ASAP / Critical Priority / Immediate Attention", match: 1 },
+            { id: 1, type: 'solution', text: "A S A P / Critical Priority / Immediate Attention", match: 1 },
             { id: 2, type: 'situation', text: "Following up on a ghosted email.", match: 2 },
             { id: 2, type: 'solution', text: "Circling back / Following up / Per my last email", match: 2 },
             { id: 3, type: 'situation', text: "You are too busy to take a task.", match: 3 },
             { id: 3, type: 'solution', text: "Limited bandwidth / At capacity / Re-prioritize", match: 3 },
             { id: 4, type: 'situation', text: "Sharing info without needing a reply.", match: 4 },
-            { id: 4, type: 'solution', text: "FYI / For visibility / Keeping you in the loop", match: 4 },
+            { id: 4, type: 'solution', text: "F Y I / For visibility / Keeping you in the loop", match: 4 },
             { id: 5, type: 'situation', text: "Finishing a task by the end of today.", match: 5 },
-            { id: 5, type: 'solution', text: "By EOD / By close of play / COB", match: 5 },
+            { id: 5, type: 'solution', text: "By E O D / By close of play / C O B", match: 5 },
             { id: 6, type: 'situation', text: "Asking for a meeting time.", match: 6 },
             { id: 6, type: 'solution', text: "Check availability / Align schedules / Calendar sync", match: 6 },
             { id: 7, type: 'situation', text: "Making a process faster and easier.", match: 7 },
@@ -46,7 +46,7 @@
             { id: 8, type: 'situation', text: "Asking for more details/explanation.", match: 8 },
             { id: 8, type: 'solution', text: "Seeking clarification / Elaborate / Drill down", match: 8 },
             { id: 9, type: 'situation', text: "The person in charge of a project.", match: 9 },
-            { id: 9, type: 'solution', text: "POC / Stakeholder / Lead", match: 9 },
+            { id: 9, type: 'solution', text: "P O C / Stakeholder / Lead", match: 9 },
             { id: 10, type: 'situation', text: "Sending a file you forgot.", match: 10 },
             { id: 10, type: 'solution', text: "Please find attached / Oversight / Attached herewith", match: 10 }
         ];
@@ -54,54 +54,6 @@
         let flippedCards = [];
         let matchedCount = 0;
 
-        // Shuffle cards
         cardsData.sort(() => Math.random() - 0.5);
 
-        const board = document.getElementById('game-board');
-
-        function speak(text) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = text;
-            msg.lang = 'en-US';
-            window.speechSynthesis.speak(msg);
-        }
-
-        cardsData.forEach((data, index) => {
-            const card = document.createElement('div');
-            card.classList.add('card', 'hidden');
-            card.dataset.index = index;
-            card.onclick = () => flipCard(card, data);
-            board.appendChild(card);
-        });
-
-        function flipCard(card, data) {
-            if (flippedCards.length < 2 && !card.classList.contains('matched') && card.classList.contains('hidden')) {
-                card.classList.remove('hidden');
-                card.textContent = data.text;
-                speak(data.text);
-                flippedCards.push({ card, data });
-
-                if (flippedCards.length === 2) {
-                    setTimeout(checkMatch, 1000);
-                }
-            }
-        }
-
-        function checkMatch() {
-            const [c1, c2] = flippedCards;
-            if (c1.data.match === c2.data.match && c1.data.type !== c2.data.type) {
-                c1.card.classList.add('matched');
-                c2.card.classList.add('matched');
-                matchedCount += 2;
-                if (matchedCount === cardsData.length) alert("Excellent! You are ready for the C-Suite.");
-            } else {
-                c1.card.classList.add('hidden');
-                c1.card.textContent = "";
-                c2.card.classList.add('hidden');
-                c2.card.textContent = "";
-            }
-            flippedCards = [];
-        }
-    </script>
-</body>
-</html>
+        const board = document.
