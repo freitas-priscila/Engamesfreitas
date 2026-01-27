@@ -3,57 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corporate Match - Email Expert Edition</title>
+    <title>Corporate Match</title>
     <style>
-        body { background-color: #000; color: #FFD700; font-family: 'Segoe UI', sans-serif; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-width: 900px; margin: 20px auto; }
+        body { background-color: #000; color: #FFD700; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 800px; margin: 20px auto; }
         .card { 
             background: #111; border: 2px solid #FFD700; border-radius: 8px; 
-            height: 150px; display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; padding: 10px; font-size: 14px; transition: 0.3s;
-            overflow: hidden; text-align: center;
+            height: 120px; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; padding: 10px; font-size: 14px; color: #FFD700;
         }
-        .card.hidden { background: #111; color: #111; }
-        .card.hidden::after { content: "?"; color: #FFD700; font-size: 40px; }
+        .card.hidden { color: #111; font-size: 40px; }
+        .card.hidden::after { content: "?"; color: #FFD700; }
         .card.matched { border-color: #00FF00; color: #00FF00; cursor: default; }
-        h1 { margin-bottom: 5px; }
-        p { color: #ccc; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-
     <h1>The Corporate Match</h1>
     <p>@freitasenglishclasses - Startup & Offshore Edition</p>
-
     <div class="grid" id="game-board"></div>
-
     <script>
         const cardsData = [
-            { id: 1, type: 'situation', text: "You need something done very fast.", match: 1 },
-            { id: 1, type: 'solution', text: "A S A P / Critical Priority / Immediate Attention", match: 1 },
-            { id: 2, type: 'situation', text: "Following up on a ghosted email.", match: 2 },
-            { id: 2, type: 'solution', text: "Circling back / Following up / Per my last email", match: 2 },
-            { id: 3, type: 'situation', text: "You are too busy to take a task.", match: 3 },
-            { id: 3, type: 'solution', text: "Limited bandwidth / At capacity / Re-prioritize", match: 3 },
-            { id: 4, type: 'situation', text: "Sharing info without needing a reply.", match: 4 },
-            { id: 4, type: 'solution', text: "F Y I / For visibility / Keeping you in the loop", match: 4 },
-            { id: 5, type: 'situation', text: "Finishing a task by the end of today.", match: 5 },
-            { id: 5, type: 'solution', text: "By E O D / By close of play / C O B", match: 5 },
-            { id: 6, type: 'situation', text: "Asking for a meeting time.", match: 6 },
-            { id: 6, type: 'solution', text: "Check availability / Align schedules / Calendar sync", match: 6 },
-            { id: 7, type: 'situation', text: "Making a process faster and easier.", match: 7 },
-            { id: 7, type: 'solution', text: "Streamline / Optimize / Reduce friction", match: 7 },
-            { id: 8, type: 'situation', text: "Asking for more details/explanation.", match: 8 },
-            { id: 8, type: 'solution', text: "Seeking clarification / Elaborate / Drill down", match: 8 },
-            { id: 9, type: 'situation', text: "The person in charge of a project.", match: 9 },
-            { id: 9, type: 'solution', text: "P O C / Stakeholder / Lead", match: 9 },
-            { id: 10, type: 'situation', text: "Sending a file you forgot.", match: 10 },
-            { id: 10, type: 'solution', text: "Please find attached / Oversight / Attached herewith", match: 10 }
+            { id: 1, type: 'a', text: "You need something done very fast.", m: 1 },
+            { id: 1, type: 'b', text: "A S A P / Critical Priority", m: 1 },
+            { id: 2, type: 'a', text: "Following up on a ghosted email.", m: 2 },
+            { id: 2, type: 'b', text: "Circling back / Following up", m: 2 },
+            { id: 3, type: 'a', text: "You are too busy to take a task.", m: 3 },
+            { id: 3, type: 'b', text: "Limited bandwidth / At capacity", m: 3 },
+            { id: 4, type: 'a', text: "Sharing info without needing a reply.", m: 4 },
+            { id: 4, type: 'b', text: "F Y I / For visibility", m: 4 },
+            { id: 5, type: 'a', text: "Finishing a task by the end of today.", m: 5 },
+            { id: 5, type: 'b', text: "By E O D / By C O B", m: 5 },
+            { id: 6, type: 'a', text: "Asking for a meeting time.", m: 6 },
+            { id: 6, type: 'b', text: "Check availability / Calendar sync", m: 6 },
+            { id: 7, type: 'a', text: "Making a process faster.", m: 7 },
+            { id: 7, type: 'b', text: "Streamline / Optimize", m: 7 },
+            { id: 8, type: 'a', text: "The person in charge of a project.", m: 8 },
+            { id: 8, type: 'b', text: "P O C / Stakeholder", m: 8 }
         ];
 
-        let flippedCards = [];
-        let matchedCount = 0;
-
+        let flipped = [];
         cardsData.sort(() => Math.random() - 0.5);
+        const board = document.getElementById('game-board');
 
-        const board = document.
+        function speak(t) {
+            const m = new SpeechSynthesisUtterance(t);
+            m.lang = 'en-US';
+            window.speechSynthesis.speak(m);
+        }
+
+        cardsData.forEach((d, i) => {
+            const c = document.createElement('div');
+            c.className = 'card hidden';
+            c.onclick = () => {
+                if (flipped.length < 2 && c.classList.contains('hidden')) {
+                    c.classList.remove('hidden');
+                    c.textContent = d.text;
+                    speak(d.text);
+                    flipped.push({ c, d });
+                    if (flipped.length === 2) setTimeout(check, 1000);
+                }
+            };
+            board.appendChild(c);
+        });
+
+        function check() {
+            const [x, y] = flipped;
+            if (x.d.m === y.d.m && x.d.type !== y.d.type) {
+                x.c.classList.add('matched');
+                y.c.classList.add('matched');
+            } else {
+                x.c.classList.add('hidden'); x.c.textContent = "";
+                y.c.classList.add('hidden'); y.c.textContent = "";
+            }
+            flipped = [];
+        }
+    </script>
+</body>
+</html>
