@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corporate Match</title>
+    <title>Corporate Match - Email Expert</title>
     <style>
         body { background-color: #000; color: #FFD700; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 800px; margin: 20px auto; }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-width: 900px; margin: 20px auto; }
         .card { 
             background: #111; border: 2px solid #FFD700; border-radius: 8px; 
-            height: 120px; display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; padding: 10px; font-size: 14px; color: #FFD700;
+            height: 140px; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; padding: 10px; font-size: 13px; color: #FFD700; transition: 0.3s;
         }
         .card.hidden { color: #111; font-size: 40px; }
         .card.hidden::after { content: "?"; color: #FFD700; }
         .card.matched { border-color: #00FF00; color: #00FF00; cursor: default; }
+        h1 { margin-bottom: 5px; color: #FFD700; }
+        p { color: #ccc; }
     </style>
 </head>
 <body>
@@ -38,7 +40,11 @@
             { id: 7, type: 'a', text: "Making a process faster.", m: 7 },
             { id: 7, type: 'b', text: "Streamline / Optimize", m: 7 },
             { id: 8, type: 'a', text: "The person in charge of a project.", m: 8 },
-            { id: 8, type: 'b', text: "P O C / Stakeholder", m: 8 }
+            { id: 8, type: 'b', text: "P O C / Stakeholder", m: 8 },
+            { id: 9, type: 'a', text: "Asking for more details.", m: 9 },
+            { id: 9, type: 'b', text: "Seeking clarification / Elaborate", m: 9 },
+            { id: 10, type: 'a', text: "Sending a file you forgot.", m: 10 },
+            { id: 10, type: 'b', text: "Please find attached / Oversight", m: 10 }
         ];
 
         let flipped = [];
@@ -60,23 +66,23 @@
                     c.textContent = d.text;
                     speak(d.text);
                     flipped.push({ c, d });
-                    if (flipped.length === 2) setTimeout(check, 1000);
+                    if (flipped.length === 2) {
+                        const [x, y] = flipped;
+                        if (x.d.m === y.d.m && x.d.type !== y.d.type) {
+                            x.c.classList.add('matched'); y.c.classList.add('matched');
+                            flipped = [];
+                        } else {
+                            setTimeout(() => {
+                                x.c.classList.add('hidden'); x.c.textContent = "";
+                                y.c.classList.add('hidden'); y.c.textContent = "";
+                                flipped = [];
+                            }, 1000);
+                        }
+                    }
                 }
             };
             board.appendChild(c);
         });
-
-        function check() {
-            const [x, y] = flipped;
-            if (x.d.m === y.d.m && x.d.type !== y.d.type) {
-                x.c.classList.add('matched');
-                y.c.classList.add('matched');
-            } else {
-                x.c.classList.add('hidden'); x.c.textContent = "";
-                y.c.classList.add('hidden'); y.c.textContent = "";
-            }
-            flipped = [];
-        }
     </script>
 </body>
 </html>
