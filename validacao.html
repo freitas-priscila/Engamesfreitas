@@ -2,36 +2,51 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Diagnóstico Estratégico - Profª Priscila</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Diagnóstico - Profª Priscila Freitas</title>
     <style>
         body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .box { text-align: center; border: 2px solid #f39c12; padding: 40px; border-radius: 15px; max-width: 450px; box-shadow: 0 0 20px rgba(243, 156, 18, 0.2); }
-        .btn { display: inline-block; margin-top: 25px; padding: 15px 30px; background-color: #f39c12; color: #000; text-decoration: none; font-weight: bold; border-radius: 5px; }
+        .btn { display: inline-block; margin-top: 25px; padding: 15px 30px; background-color: #f39c12; color: #000; text-decoration: none; font-weight: bold; border-radius: 5px; cursor: pointer; border: none; font-size: 16px; }
+        .btn:hover { background-color: #e67e22; }
         .ig-link { display: block; margin-top: 15px; color: #f39c12; text-decoration: none; font-size: 14px; opacity: 0.8; }
         h1 { color: #f39c12; font-size: 22px; margin-bottom: 10px; }
+        p { line-height: 1.6; color: #ddd; }
+        #client-tag { font-size: 12px; color: #666; margin-top: 20px; display: block; }
     </style>
 </head>
 <body onload="check()">
+
     <div id="denied" class="box">
         <h1>ACESSO RESTRITO</h1>
-        <p>Este ambiente é exclusivo para alunos em processo de validação técnica.</p>
+        <p>Este ambiente é exclusivo para alunos em processo de validação técnica e estratégica.</p>
         <a href="https://www.instagram.com/freitasenglishclasses/" class="ig-link">@freitasenglishclasses</a>
     </div>
 
     <div id="allowed" class="box" style="display:none;">
         <h1>PORTAL DE DIAGNÓSTICO</h1>
-        <p>Olá! Você foi validado para iniciar sua avaliação de proficiência.</p>
-        <p>Identidade Profissional: <strong>@freitasenglishclasses</strong></p>
-        <a href="COLE_AQUI_O_LINK_DO_SEU_GOOGLE_FORMS" class="btn">INICIAR DIAGNÓSTICO ESTRATÉGICO</a>
+        <p>Olá! Sua identidade foi validada com sucesso para iniciar sua avaliação de proficiência.</p>
+        <p><strong>Identidade Profissional:</strong> @freitasenglishclasses</p>
+        
+        <a href="https://docs.google.com/forms/d/1JJ22utmZMAd363mRNs-P0bk5dTAsyCYsQcqAOHDoj2I/viewform" class="btn">INICIAR DIAGNÓSTICO ESTRATÉGICO</a>
+        
+        <span id="client-tag"></span>
     </div>
 
     <script>
         function check() {
             const params = new URLSearchParams(window.location.search);
-            if (params.get('acesso') === 'aluno2026') {
+            const acesso = params.get('acesso');
+            const cliente = params.get('cliente') || "Candidato em Análise";
+
+            // VALIDAÇÃO DA SENHA MESTRE
+            if (acesso === 'aluno2026') {
                 document.getElementById('denied').style.display = 'none';
                 document.getElementById('allowed').style.display = 'block';
+                document.getElementById('client-tag').innerText = "Acesso rastreado para: " + cliente;
+            } else {
+                document.getElementById('denied').style.display = 'block';
+                document.getElementById('allowed').style.display = 'none';
             }
         }
     </script>
