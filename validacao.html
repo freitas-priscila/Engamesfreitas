@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="robots" content="noindex, nofollow">
-    <title>Protocolo de Segurança - Profª Priscila</title>
+    <title>Diagnóstico Estratégico - Profª Priscila</title>
     <style>
         body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { text-align: center; border: 2px solid #f39c12; padding: 40px; border-radius: 15px; max-width: 450px; }
+        .box { text-align: center; border: 2px solid #f39c12; padding: 40px; border-radius: 15px; max-width: 450px; box-shadow: 0 0 20px rgba(243, 156, 18, 0.2); }
         .btn { display: inline-block; margin-top: 25px; padding: 15px 30px; background-color: #f39c12; color: #000; text-decoration: none; font-weight: bold; border-radius: 5px; }
-        h1 { color: #f39c12; font-size: 22px; }
+        .ig-link { display: block; margin-top: 15px; color: #f39c12; text-decoration: none; font-size: 14px; opacity: 0.8; }
+        h1 { color: #f39c12; font-size: 22px; margin-bottom: 10px; }
     </style>
 </head>
 <body onload="check()">
     <div id="denied" class="box">
         <h1>ACESSO RESTRITO</h1>
-        <p>Este ambiente é exclusivo para diagnóstico técnico de alunos validados.</p>
-        <p style="color: #e74c3c; font-weight: bold;">Tentativa de acesso não autorizado registrada.</p>
+        <p>Este ambiente é exclusivo para alunos em processo de validação técnica.</p>
+        <a href="https://www.instagram.com/freitasenglishclasses/" class="ig-link">@freitasenglishclasses</a>
     </div>
 
     <div id="allowed" class="box" style="display:none;">
         <h1>PORTAL DE DIAGNÓSTICO</h1>
-        <p>Seja bem-vindo(a). Para iniciarmos sua avaliação de proficiência, clique no botão abaixo:</p>
-        <a href="COLE_AQUI_O_LINK_DO_SEU_GOOGLE_FORMS" class="btn">INICIAR AGORA</a>
+        <p>Olá! Você foi validado para iniciar sua avaliação de proficiência.</p>
+        <p>Identidade Profissional: <strong>@freitasenglishclasses</strong></p>
+        <a href="COLE_AQUI_O_LINK_DO_SEU_GOOGLE_FORMS" class="btn">INICIAR DIAGNÓSTICO ESTRATÉGICO</a>
     </div>
 
     <script>
