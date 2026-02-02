@@ -3,51 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Diagnóstico - Profª Priscila Freitas</title>
+    <title>Learning Portal - Freitas English</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { text-align: center; border: 2px solid #f39c12; padding: 40px; border-radius: 15px; max-width: 450px; box-shadow: 0 0 20px rgba(243, 156, 18, 0.2); }
-        .btn { display: inline-block; margin-top: 25px; padding: 15px 30px; background-color: #f39c12; color: #000; text-decoration: none; font-weight: bold; border-radius: 5px; cursor: pointer; border: none; font-size: 16px; }
-        .btn:hover { background-color: #e67e22; }
-        .ig-link { display: block; margin-top: 15px; color: #f39c12; text-decoration: none; font-size: 14px; opacity: 0.8; }
-        h1 { color: #f39c12; font-size: 22px; margin-bottom: 10px; }
-        p { line-height: 1.6; color: #ddd; }
-        #client-tag { font-size: 12px; color: #666; margin-top: 20px; display: block; }
+        body { background-color: #000; color: #d4af37; font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; }
+        .container { border: 2px solid #d4af37; padding: 40px; border-radius: 15px; background: rgba(20, 20, 20, 0.9); box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+        h1 { margin-bottom: 20px; }
+        input { padding: 10px; width: 80%; border-radius: 5px; border: 1px solid #d4af37; background: #222; color: #fff; margin-bottom: 20px; text-align: center; }
+        button { padding: 10px 25px; background-color: #d4af37; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1em; }
+        button:hover { background-color: #fff; color: #000; }
+        #linkArea { display: none; margin-top: 20px; }
     </style>
 </head>
-<body onload="check()">
+<body>
+    <div class="container">
+        <h2 id="welcomeMsg">Acesso Restrito</h2>
+        <input type="password" id="passInput" placeholder="Digite sua chave de acesso">
+        <br>
+        <button onclick="verificarAcesso()">Próximo</button>
 
-    <div id="denied" class="box">
-        <h1>ACESSO RESTRITO</h1>
-        <p>Este ambiente é exclusivo para alunos em processo de validação técnica e estratégica.</p>
-        <a href="https://www.instagram.com/freitasenglishclasses/" class="ig-link">@freitasenglishclasses</a>
-    </div>
-
-    <div id="allowed" class="box" style="display:none;">
-        <h1>PORTAL DE DIAGNÓSTICO</h1>
-        <p>Olá! Sua identidade foi validada com sucesso para iniciar sua avaliação de proficiência.</p>
-        <p><strong>Identidade Profissional:</strong> @freitasenglishclasses</p>
-        
-        <a href="https://docs.google.com/forms/d/1JJ22utmZMAd363mRNs-P0bk5dTAsyCYsQcqAOHDoj2I/viewform" class="btn">INICIAR DIAGNÓSTICO ESTRATÉGICO</a>
-        
-        <span id="client-tag"></span>
+        <div id="linkArea">
+            <p>Acesso liberado para triagem estratégica!</p>
+            <button onclick="abrirFormulario()">INICIAR DIAGNÓSTICO ESTRATÉGICO</button>
+        </div>
     </div>
 
     <script>
-        function check() {
-            const params = new URLSearchParams(window.location.search);
-            const acesso = params.get('acesso');
-            const cliente = params.get('cliente') || "Candidato em Análise";
+        const urlParams = new URLSearchParams(window.location.search);
+        const cliente = urlParams.get('cliente') || 'Visitante';
+        document.getElementById('welcomeMsg').innerText = "Acesso Restrito: " + cliente.toUpperCase();
 
-            // VALIDAÇÃO DA SENHA MESTRE
-            if (acesso === 'aluno2026') {
-                document.getElementById('denied').style.display = 'none';
-                document.getElementById('allowed').style.display = 'block';
-                document.getElementById('client-tag').innerText = "Acesso rastreado para: " + cliente;
+        function verificarAcesso() {
+            const senha = document.getElementById('passInput').value;
+            // SENHA UNIFICADA AQUI:
+            if (senha === 'aluno2026') {
+                document.getElementById('linkArea').style.display = 'block';
+                document.getElementById('passInput').style.display = 'none';
+                document.querySelector('button').style.display = 'none';
             } else {
-                document.getElementById('denied').style.display = 'block';
-                document.getElementById('allowed').style.display = 'none';
+                alert("Senha incorreta!");
             }
+        }
+
+        function abrirFormulario() {
+            // LINK DO SEU FORMULÁRIO QUE PEDE E-MAIL:
+            window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform?usp=pp_url&entry.123456789=" + cliente;
         }
     </script>
 </body>
