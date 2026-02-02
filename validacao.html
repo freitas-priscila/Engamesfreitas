@@ -11,7 +11,7 @@
         input { padding: 12px; width: 80%; border-radius: 5px; border: 1px solid #d4af37; background: #222; color: #fff; margin-bottom: 20px; text-align: center; font-size: 1em; }
         button { padding: 12px 25px; background-color: #d4af37; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1em; transition: 0.3s; }
         button:hover { background-color: #fff; color: #000; }
-        #linkArea { display: none; margin-top: 20px; border-top: 1px solid #333; pt-20px; }
+        #linkArea { display: none; margin-top: 20px; border-top: 1px solid #333; pt: 20px; }
         .success-text { color: #fff; margin-bottom: 15px; font-size: 0.9em; }
     </style>
 </head>
@@ -31,14 +31,12 @@
     </div>
 
     <script>
-        // Captura o nome do cliente da URL para personalizar a recepção
         const urlParams = new URLSearchParams(window.location.search);
         const cliente = urlParams.get('cliente') || 'Visitante';
         document.getElementById('welcomeMsg').innerText = "Acesso Restrito: " + cliente.toUpperCase();
 
         function verificarAcesso() {
             const senha = document.getElementById('passInput').value;
-            // Senha unificada conforme solicitado
             if (senha === 'aluno2026') {
                 document.getElementById('linkArea').style.display = 'block';
                 document.getElementById('loginArea').style.display = 'none';
@@ -48,9 +46,8 @@
         }
 
         function abrirFormulario() {
-            // Link direto e corrigido para o seu formulário de triagem
-            const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform?entry.123456789=" + encodeURIComponent(cliente);
-            window.location.href = formURL;
+            // LINK CORRIGIDO PARA EVITAR ERRO 404
+            window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform";
         }
     </script>
 </body>
