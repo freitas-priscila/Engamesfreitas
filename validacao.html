@@ -6,47 +6,51 @@
     <title>Learning Portal - Freitas English</title>
     <style>
         body { background-color: #000; color: #d4af37; font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; }
-        .container { border: 2px solid #d4af37; padding: 40px; border-radius: 15px; background: rgba(20, 20, 20, 0.9); box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
-        h1 { margin-bottom: 20px; }
-        input { padding: 10px; width: 80%; border-radius: 5px; border: 1px solid #d4af37; background: #222; color: #fff; margin-bottom: 20px; text-align: center; }
-        button { padding: 10px 25px; background-color: #d4af37; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1em; }
+        .container { border: 2px solid #d4af37; padding: 40px; border-radius: 15px; background: rgba(20, 20, 20, 0.9); box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); width: 90%; max-width: 400px; }
+        h2 { margin-bottom: 20px; text-transform: uppercase; font-size: 1.2em; }
+        input { padding: 12px; width: 80%; border-radius: 5px; border: 1px solid #d4af37; background: #222; color: #fff; margin-bottom: 20px; text-align: center; font-size: 1em; }
+        button { padding: 12px 25px; background-color: #d4af37; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1em; transition: 0.3s; }
         button:hover { background-color: #fff; color: #000; }
-        #linkArea { display: none; margin-top: 20px; }
+        #linkArea { display: none; margin-top: 20px; border-top: 1px solid #333; pt-20px; }
+        .success-text { color: #fff; margin-bottom: 15px; font-size: 0.9em; }
     </style>
 </head>
 <body>
     <div class="container">
         <h2 id="welcomeMsg">Acesso Restrito</h2>
-        <input type="password" id="passInput" placeholder="Digite sua chave de acesso">
-        <br>
-        <button onclick="verificarAcesso()">Próximo</button>
+        <div id="loginArea">
+            <input type="password" id="passInput" placeholder="Sua chave de acesso">
+            <br>
+            <button onclick="verificarAcesso()">ACESSAR PORTAL</button>
+        </div>
 
         <div id="linkArea">
-            <p>Acesso liberado para triagem estratégica!</p>
+            <p class="success-text">Chave validada com sucesso!</p>
             <button onclick="abrirFormulario()">INICIAR DIAGNÓSTICO ESTRATÉGICO</button>
         </div>
     </div>
 
     <script>
+        // Captura o nome do cliente da URL para personalizar a recepção
         const urlParams = new URLSearchParams(window.location.search);
         const cliente = urlParams.get('cliente') || 'Visitante';
         document.getElementById('welcomeMsg').innerText = "Acesso Restrito: " + cliente.toUpperCase();
 
         function verificarAcesso() {
             const senha = document.getElementById('passInput').value;
-            // SENHA UNIFICADA AQUI:
+            // Senha unificada conforme solicitado
             if (senha === 'aluno2026') {
                 document.getElementById('linkArea').style.display = 'block';
-                document.getElementById('passInput').style.display = 'none';
-                document.querySelector('button').style.display = 'none';
+                document.getElementById('loginArea').style.display = 'none';
             } else {
-                alert("Senha incorreta!");
+                alert("Senha incorreta! Tente novamente.");
             }
         }
 
         function abrirFormulario() {
-            // LINK DO SEU FORMULÁRIO QUE PEDE E-MAIL:
-            window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform?usp=pp_url&entry.123456789=" + cliente;
+            // Link direto e corrigido para o seu formulário de triagem
+            const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform?entry.123456789=" + encodeURIComponent(cliente);
+            window.location.href = formURL;
         }
     </script>
 </body>
