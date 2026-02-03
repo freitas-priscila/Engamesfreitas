@@ -67,7 +67,7 @@
             display: none;
             margin-top: 20px;
             border-top: 1px solid #333;
-            padding-top: 20px; /* ✅ CORRIGIDO */
+            padding-top: 20px;
         }
 
         .success-text {
@@ -76,34 +76,6 @@
             font-size: 0.9em;
         }
     </style>
-
-    <!-- garante que o DOM carregue antes do JS -->
-    <script defer>
-        document.addEventListener("DOMContentLoaded", () => {
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const cliente = urlParams.get('cliente') || 'Visitante';
-
-            document.getElementById('welcomeMsg').innerText =
-                "Acesso Restrito: " + cliente.toUpperCase();
-
-            window.verificarAcesso = function () {
-                const senha = document.getElementById('passInput').value;
-
-                if (senha === 'aluno2026') {
-                    document.getElementById('linkArea').style.display = 'block';
-                    document.getElementById('loginArea').style.display = 'none';
-                } else {
-                    alert("Senha incorreta! Tente novamente.");
-                }
-            };
-
-            window.abrirFormulario = function () {
-                window.location.href =
-                    "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform";
-            };
-        });
-    </script>
 </head>
 
 <body>
@@ -121,6 +93,31 @@
             <button onclick="abrirFormulario()">INICIAR DIAGNÓSTICO ESTRATÉGICO</button>
         </div>
     </div>
+
+    <script>
+        // Função para carregar o nome do cliente da URL
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cliente = urlParams.get('cliente') || 'Visitante';
+            document.getElementById('welcomeMsg').innerText = "Acesso Restrito: " + cliente.toUpperCase();
+        });
+
+        // Funções globais para garantir que o 'onclick' as encontre
+        function verificarAcesso() {
+            const senha = document.getElementById('passInput').value;
+
+            // A senha definida por você é: aluno2026
+            if (senha === 'aluno2026') {
+                document.getElementById('linkArea').style.display = 'block';
+                document.getElementById('loginArea').style.display = 'none';
+            } else {
+                alert("Senha incorreta! Tente novamente.");
+            }
+        }
+
+        function abrirFormulario() {
+            window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform";
+        }
+    </script>
 </body>
 </html>
-
