@@ -3,119 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Portal - Freitas English</title>
-
+    <title>Customized English - Student Selection Hub</title>
     <style>
         body {
-            background-color: #000;
-            color: #d4af37;
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            text-align: center;
         }
-
-        .container {
-            border: 2px solid #d4af37;
-            padding: 40px;
-            border-radius: 15px;
-            background: rgba(20, 20, 20, 0.9);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        .hub-container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            max-width: 450px;
             width: 90%;
-            max-width: 400px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-size: 1.2em;
-        }
-
-        input {
-            padding: 12px;
-            width: 80%;
-            border-radius: 5px;
-            border: 1px solid #d4af37;
-            background: #222;
-            color: #fff;
-            margin-bottom: 20px;
             text-align: center;
-            font-size: 1em;
         }
-
-        .btn-hub {
+        h1 {
+            color: #4b148c; /* Roxo padrão do seu Forms */
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            color: #5f6368;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
             display: block;
-            width: 100%;
-            padding: 12px 0;
-            margin-bottom: 10px;
-            background-color: #d4af37;
-            color: #000;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9em;
+            padding: 18px;
+            margin: 12px 0;
             text-decoration: none;
-            transition: 0.3s;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s, background 0.3s;
         }
-
-        .btn-hub:hover {
-            background-color: #fff;
-            color: #000;
+        .btn:active {
+            transform: scale(0.98);
         }
-
-        #linkArea {
-            display: none;
-            margin-top: 20px;
-            border-top: 1px solid #333;
-            padding-top: 20px;
+        /* Questionnaire 1 - Cor Principal */
+        .btn-primary {
+            background-color: #673ab7;
+            color: white;
         }
-
-        .success-text {
-            color: #fff;
-            margin-bottom: 15px;
-            font-size: 0.9em;
+        .btn-primary:hover {
+            background-color: #512da8;
+        }
+        /* Questionnaire 2 - Cor Beginner */
+        .btn-secondary {
+            background-color: #00796b;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #004d40;
+        }
+        .method-tag {
+            margin-top: 2rem;
+            display: inline-block;
+            font-size: 0.75rem;
+            color: #70757a;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            width: 100%;
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h2 id="welcomeMsg">Acesso Restrito</h2>
 
-        <div id="loginArea">
-            <input type="password" id="passInput" placeholder="Sua chave de acesso">
-            <br>
-            <button class="btn-hub" onclick="verificarAcesso()">ACESSAR PORTAL</button>
-        </div>
+<div class="hub-container">
+    <h1>Customized English</h1>
+    <p>Escolha o questionário de triagem abaixo para iniciar sua jornada ao nível A2.</p>
 
-        <div id="linkArea">
-            <p class="success-text">Chave validada! Selecione o questionário:</p>
-            <a href="https://forms.gle/JyFaWpN7ZyzHEn7B8" target="_blank" class="btn-hub">1. QUESTIONNAIRE 1 (GOALS)</a>
-            
-            <a href="https://forms.gle/bX1HFEFNi5nfhBfM6" target="_blank" class="btn-hub">2. QUESTIONNAIRE 2 (BEGINNER)</a>
-        </div>
+    <a href="https://forms.gle/afMKUCxQvHSQdaJr7" target="_blank" class="btn btn-primary">
+        Questionnaire 1 - Standard Selection
+    </a>
+
+    <a href="https://forms.gle/wwhZYRgHRf6HFqZA7" target="_blank" class="btn btn-secondary">
+        Questionnaire 2 - Beginner Level
+    </a>
+
+    <div class="method-tag">
+        <strong>A2 Level in 8 Months</strong><br>
+        Focus: Professional & Technical English
     </div>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const cliente = urlParams.get('cliente') || 'Visitante';
-            document.getElementById('welcomeMsg').innerText = "Acesso Restrito: " + cliente.toUpperCase();
-        });
-
-        function verificarAcesso() {
-            const senha = document.getElementById('passInput').value;
-            if (senha === 'aluno2026') {
-                document.getElementById('linkArea').style.display = 'block';
-                document.getElementById('loginArea').style.display = 'none';
-            } else {
-                alert("Senha incorreta! Tente novamente.");
-            }
-        }
-    </script>
 </body>
 </html>
