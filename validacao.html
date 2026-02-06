@@ -46,19 +46,23 @@
             font-size: 1em;
         }
 
-        button {
-            padding: 12px 25px;
+        .btn-hub {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            margin-bottom: 10px;
             background-color: #d4af37;
             color: #000;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1em;
+            font-size: 0.9em;
+            text-decoration: none;
             transition: 0.3s;
         }
 
-        button:hover {
+        .btn-hub:hover {
             background-color: #fff;
             color: #000;
         }
@@ -85,38 +89,32 @@
         <div id="loginArea">
             <input type="password" id="passInput" placeholder="Sua chave de acesso">
             <br>
-            <button onclick="verificarAcesso()">ACESSAR PORTAL</button>
+            <button class="btn-hub" onclick="verificarAcesso()">ACESSAR PORTAL</button>
         </div>
 
         <div id="linkArea">
-            <p class="success-text">Chave validada com sucesso!</p>
-            <button onclick="abrirFormulario()">INICIAR DIAGNÓSTICO ESTRATÉGICO</button>
+            <p class="success-text">Chave validada! Selecione o questionário:</p>
+            <a href="https://forms.gle/JyFaWpN7ZyzHEn7B8" target="_blank" class="btn-hub">1. QUESTIONNAIRE 1 (GOALS)</a>
+            
+            <a href="https://forms.gle/bX1HFEFNi5nfhBfM6" target="_blank" class="btn-hub">2. QUESTIONNAIRE 2 (BEGINNER)</a>
         </div>
     </div>
 
     <script>
-        // Função para carregar o nome do cliente da URL
         document.addEventListener("DOMContentLoaded", () => {
             const urlParams = new URLSearchParams(window.location.search);
             const cliente = urlParams.get('cliente') || 'Visitante';
             document.getElementById('welcomeMsg').innerText = "Acesso Restrito: " + cliente.toUpperCase();
         });
 
-        // Funções globais para garantir que o 'onclick' as encontre
         function verificarAcesso() {
             const senha = document.getElementById('passInput').value;
-
-            // A senha definida por você é: aluno2026
             if (senha === 'aluno2026') {
                 document.getElementById('linkArea').style.display = 'block';
                 document.getElementById('loginArea').style.display = 'none';
             } else {
                 alert("Senha incorreta! Tente novamente.");
             }
-        }
-
-        function abrirFormulario() {
-            window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSddDRWrYgWb8wX8N9B2xWYtzFxsX2JQq4rp8hMdbcxYO_ixzQ/viewform";
         }
     </script>
 </body>
