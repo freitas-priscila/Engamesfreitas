@@ -1,95 +1,86 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customized English - Student Selection Hub</title>
+    <title>English Selection Hub</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-        .hub-container {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            max-width: 450px;
-            width: 90%;
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
             text-align: center;
+            max-width: 400px;
+            width: 90%;
         }
         h1 {
-            color: #4b148c; /* Roxo padrão do seu Forms */
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 10px;
         }
         p {
-            color: #5f6368;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 14px;
         }
         .btn {
             display: block;
-            padding: 18px;
-            margin: 12px 0;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: transform 0.2s, background 0.3s;
-        }
-        .btn:active {
-            transform: scale(0.98);
-        }
-        /* Questionnaire 1 - Cor Principal */
-        .btn-primary {
-            background-color: #673ab7;
-            color: white;
-        }
-        .btn-primary:hover {
-            background-color: #512da8;
-        }
-        /* Questionnaire 2 - Cor Beginner */
-        .btn-secondary {
-            background-color: #00796b;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background-color: #004d40;
-        }
-        .method-tag {
-            margin-top: 2rem;
-            display: inline-block;
-            font-size: 0.75rem;
-            color: #70757a;
-            border-top: 1px solid #eee;
-            padding-top: 1rem;
             width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-decoration: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+            box-sizing: border-box;
+        }
+        .btn-standard {
+            background-color: #3498db;
+        }
+        .btn-standard:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .btn-beginner {
+            background-color: #2ecc71;
+        }
+        .btn-beginner:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #bdc3c7;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
         }
     </style>
 </head>
 <body>
 
-<div class="hub-container">
+<div class="container">
     <h1>Customized English</h1>
-    <p>Escolha o questionário de triagem abaixo para iniciar sua jornada ao nível A2.</p>
+    <p>Please select the appropriate questionnaire to begin your professional evaluation.</p>
+    
+    <a href="https://forms.gle/afMKUCxQvHSQdaJr7" class="btn btn-standard">Questionnaire 1</a>
+    
+    <a href="https://forms.gle/wwhZYRgHRf6HFqZA7" class="btn btn-beginner">Questionnaire 2 (Beginner)</a>
 
-    <a href="https://forms.gle/afMKUCxQvHSQdaJr7" target="_blank" class="btn btn-primary">
-        Questionnaire 1 - Standard Selection
-    </a>
-
-    <a href="https://forms.gle/wwhZYRgHRf6HFqZA7" target="_blank" class="btn btn-secondary">
-        Questionnaire 2 - Beginner Level
-    </a>
-
-    <div class="method-tag">
-        <strong>A2 Level in 8 Months</strong><br>
-        Focus: Professional & Technical English
+    <div class="footer">
+        Professional & Technical English Selection<br>
+        © 2026 Customized Method
     </div>
 </div>
 
