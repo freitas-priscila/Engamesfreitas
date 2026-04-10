@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phrasal Verb Game</title>
+    <style>
+        /* Estilo Dark e Cores solicitadas */
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Estilo terminal/código */
+            background-color: #121212; /* Fundo quase preto */
+            color: white; /* Texto padrão branco */
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Título em Amarelo */
+        h1 {
+            color: yellow;
+            text-align: center;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid yellow;
+            padding-bottom: 10px;
+        }
+
+        /* Explicações B2 em Branco */
+        .explanations {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .explanations p {
+            margin: 10px 0;
+        }
+
+        /* Instrução em Amarelo */
+        .instruction {
+            color: yellow;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Container do Exercício */
+        #quiz-container {
+            background-color: #1e1e1e; /* Card cinza muito escuro */
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+
+        /* Frase com Gap */
+        #question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Estilo dos Botões (A resposta) */
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 15px;
+            border: 1px solid white;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        /* Hover dos Botões: Amarelo com texto preto */
+        button:hover {
+            background-color: yellow;
+            color: black;
+            border-color: yellow;
+        }
+
+        /* Feedback das respostas */
+        #feedback {
+            text-align: center;
+            font-weight: bold;
+            height: 20px; /* Mantém espaço reservado */
+        }
+
+        /* Rodapé em Branco */
+        .footer {
+            color: white;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            border-top: 1px solid #333;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Phrasal Verb Bring Up and Throw Up</h1>
+
+    <div class="explanations">
+        <p><strong>Bring up</strong> means to care for a child until they are an adult; or, in professional contexts, to mention or introduce a topic in conversation.</p>
+        <p><strong>Throw up</strong> (simple past: <strong>threw up</strong>) means to vomit; informally, it can also mean to produce something quickly or reveal new information.</p>
+    </div>
+
+    <p class="instruction">According to the context, choose the correct verb:</p>
+
+    <div id="quiz-container">
+        <p id="question"></p>
+        
+        <div class="options">
+            <button onclick="check(0)">bring up</button>
+            <button onclick="check(1)">brought up</button>
+            <button onclick="check(2)">throw up</button>
+            <button onclick="check(3)">threw up</button>
+        </div>
+
+        <div id="feedback"></div>
+    </div>
+
+    <div class="footer">
+        jogos@freitasengoishclasses
+    </div>
+</div>
+
+<script>
+    // Perguntas, com a indicação de qual botão é o correto (0, 1, 2 ou 3)
+    const questions = [
+        { q: "During the quarterly review, Mark decided to ______ the budget cuts.", correct: 0 },
+        { q: "The company’s investigation ______ some alarming data.", correct: 3 },
+        { q: "After eating that suspect sushi, I felt like I was going to ______.", correct: 2 },
+        { q: "He was ______ in London but moved to São Paulo as an adult.", correct: 1 },
+        { q: "Please do not ______ that sensitive topic right now.", correct: 0 },
+        { q: "The intense heat made two marathon runners ______.", correct: 2 },
+        { q: "The preliminary analysis ______ some interesting results.", correct: 3 }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function loadQuestion() {
+        const q = questions[currentQuestionIndex];
+        document.getElementById('question').innerText = q.q;
+        document.getElementById('feedback').innerText = ""; // Limpa feedback anterior
+    }
+
+    function check(selectedOptionIndex) {
+        const feedback = document.getElementById('feedback');
+        const correctOptionIndex = questions[currentQuestionIndex].correct;
+
+        if(selectedOptionIndex === correctOptionIndex) {
+            feedback.innerText = "Correct! ✓";
+            feedback.style.color = "yellow"; // Feedback de acerto em amarelo
+
+            // Avança para a próxima pergunta após 1 segundo
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if(currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    document.getElementById('quiz-container').innerHTML = "<p style='color: yellow; font-size: 1.5rem; text-align: center;'>Excellent! You completed the challenge.</p>";
+                }
+            }, 1000);
+        } else {
+            feedback.innerText = "Try again! ✗";
+            feedback.style.color = "red"; // Feedback de erro em vermelho para destaque
+        }
+    }
+
+    // Inicia o jogo
+    loadQuestion();
+</script>
+
+</body>
+</html>
