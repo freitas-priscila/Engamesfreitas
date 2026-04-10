@@ -3,163 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freitas English Classes - Learning Portal</title>
+    <title>Freitas English Classes - Validação</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: #000;
             color: #fff;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            width: 100%;
-            border-bottom: 2px solid yellow;
-        }
-        h1 { color: yellow; margin: 0; font-size: 2rem; }
-        .subtitle { color: #ccc; font-size: 1rem; margin-top: 5px; }
-        
-        .container {
-            max-width: 600px;
-            width: 90%;
-            padding: 30px 0;
+            justify-content: center;
+            min-height: 100vh;
         }
 
+        /* TELA DE VALIDAÇÃO (LOGIN) */
+        #validation-screen {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .login-box {
+            border: 2px solid yellow;
+            padding: 30px;
+            border-radius: 20px;
+            background-color: #111;
+        }
+        h2 { color: yellow; margin-bottom: 20px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid yellow;
+            background: #222;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .access-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: yellow;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* TELA DOS JOGOS (ESCONDIDA INICIALMENTE) */
+        #portal-screen {
+            display: none;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px 0;
+        }
         .game-button {
             display: block;
             text-decoration: none;
-            background-color: transparent;
             border: 2px solid yellow;
             border-radius: 15px;
             margin-bottom: 15px;
             padding: 20px;
-            transition: transform 0.2s;
+            transition: 0.2s;
         }
-        .game-button:hover {
-            transform: scale(1.02);
-            background-color: #1a1a1a;
-        }
-        .button-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .text-info { display: flex; flex-direction: column; }
-        .game-title { color: yellow; font-weight: bold; font-size: 1.1rem; }
-        .game-desc { color: #fff; font-size: 0.85rem; margin-top: 4px; }
-        .status-badge {
-            background-color: #2ea44f;
-            color: white;
-            font-size: 0.7rem;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-        footer {
-            margin: 40px 0;
-            color: #555;
-            font-size: 0.8rem;
-        }
+        .game-button:hover { background-color: #1a1a1a; transform: scale(1.02); }
+        .game-title { color: yellow; font-weight: bold; display: block; }
+        .game-desc { color: #fff; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Freitas English Classes</h1>
-    <p class="subtitle">Interactive Games Portal</p>
-</header>
-
-<div class="container">
-
-    <a href="family-members-1.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">Family Members 1</span>
-                <span class="game-desc">Basic vocabulary</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
+    <div id="validation-screen">
+        <div class="login-box">
+            <h2>ACESSO RESTRITO</h2>
+            <form id="studentForm">
+                <input type="text" id="name" placeholder="Seu Nome Completo" required>
+                <input type="password" id="password" placeholder="Senha de Acesso" required>
+                <button type="submit" class="access-btn">VALIDAR E ENTRAR</button>
+            </form>
         </div>
-    </a>
+    </div>
 
-    <a href="family-members-advanced.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">Family Members Advanced</span>
-                <span class="game-desc">Advanced relations</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
+    <div id="portal-screen">
+        <h1 style="color: yellow; text-align: center;">Learning Portal</h1>
+        
+        <a href="phrasal-verbs1-game.html" class="game-button">
+            <span class="game-title">Phrasal Verbs: Bring Up vs Throw Up</span>
+            <span class="game-desc">Strategic Business English</span>
+        </a>
+
+        <a href="as-varias-formas-de-bring.html" class="game-button">
+            <span class="game-title">As Várias Formas de Bring</span>
+            <span class="game-desc">20 Challenges (B2 Level)</span>
+        </a>
+
         </div>
-    </a>
 
-    <a href="fill-in-the-blanks-2-verb-to-be.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">Verb to Be</span>
-                <span class="game-desc">Fill in the blanks</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
-        </div>
-    </a>
+    <script>
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const pass = document.getElementById('password').value;
 
-    <a href="memory-game-adjectives-people.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">Adjectives: People</span>
-                <span class="game-desc">Memory game</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
-        </div>
-    </a>
-
-    <a href="memory-game-occupations-freitasenglishclass.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">Occupations</span>
-                <span class="game-desc">Vocabulary game</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
-        </div>
-    </a>
-
-    <a href="corporate-match.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">Corporate Match</span>
-                <span class="game-desc">Professional Email Vocabulary</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
-        </div>
-    </a>
-
-    <a href="phrasal-verbs1-game.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">Phrasal Verbs: Bring Up vs Throw Up</span>
-                <span class="game-desc">Strategic Business English and Daily Verbs</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
-        </div>
-    </a>
-
-    <a href="as-varias-formas-de-bring.html" class="game-button">
-        <div class="button-content">
-            <div class="text-info">
-                <span class="game-title">As Várias Formas de Bring</span>
-                <span class="game-desc">Bring, Along, Over and Up (20 Challenges)</span>
-            </div>
-            <span class="status-badge">ATIVO</span>
-        </div>
-    </a>
-
-</div>
-
-<footer>
-    @freitasenglishclasses | Interactive Learning Portal
-</footer>
-
+            // 1. ENVIA PARA O SEU GOOGLE FORM (Substitua o link abaixo pelo seu link do Form)
+            const formURL = "SEU_LINK_DO_GOOGLE_FORM_AQUI"; 
+            
+            // Aqui ele simula o envio e libera o portal
+            if(pass === "aluno2026") { // Coloque aqui a senha que você quer
+                // Esconde login e mostra portal
+                document.getElementById('validation-screen').style.display = 'none';
+                document.getElementById('portal-screen').style.display = 'block';
+                document.body.style.justifyContent = 'flex-start';
+            } else {
+                alert("Senha incorreta. Verifique com a Professora Priscila.");
+            }
+        });
+    </script>
 </body>
 </html>
