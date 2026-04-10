@@ -20,19 +20,20 @@
             text-align: center;
             font-size: 1.5rem;
             text-transform: uppercase;
-            border-bottom: 1px solid yellow;
+            border-bottom: 2px solid yellow;
             padding-bottom: 10px;
         }
-        .explanations { margin-bottom: 30px; line-height: 1.6; }
+        .explanations { margin-bottom: 30px; line-height: 1.6; border-left: 3px solid yellow; padding-left: 15px; }
         .instruction { color: yellow; font-weight: bold; margin-top: 20px; text-align: center; }
         #quiz-container {
             background-color: #1e1e1e;
-            padding: 20px;
+            padding: 30px;
             border-radius: 4px;
             border: 1px solid #333;
+            margin-top: 20px;
         }
-        #question { font-size: 1.2rem; margin-bottom: 20px; text-align: center; min-height: 50px;}
-        .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        #question { font-size: 1.3rem; margin-bottom: 30px; text-align: center; min-height: 60px; color: white; }
+        .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         button {
             padding: 15px;
             border: 1px solid white;
@@ -44,14 +45,14 @@
             transition: all 0.2s;
         }
         button:hover { background-color: yellow; color: black; border-color: yellow; }
-        #feedback { text-align: center; font-weight: bold; height: 20px; }
+        #feedback { text-align: center; font-weight: bold; height: 30px; margin-top: 20px; }
         .footer {
             color: white;
             text-align: center;
-            margin-top: 40px;
-            font-size: 0.8rem;
+            margin-top: 50px;
+            font-size: 0.9rem;
             border-top: 1px solid #333;
-            padding-top: 10px;
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -61,14 +62,14 @@
     <h1>Phrasal Verb Bring Up and Throw Up</h1>
 
     <div class="explanations">
-        <p><strong>Bring up</strong>: 1. To raise a child. 2. To introduce a topic in a meeting. 3. To regurgitate food (golfar), often used politely or for babies.</p>
-        <p><strong>Throw up</strong> (simple past: <strong>threw up</strong>): To vomit; a more violent and unpleasant action of the stomach.</p>
+        <p><strong>Bring up</strong>: 1. To raise/educate a child. 2. To mention a topic (Business). 3. To regurgitate/golfar (Common for babies).</p>
+        <p><strong>Throw up</strong> (Past: <strong>threw up</strong>): To vomit violently (Illness/Alcohol).</p>
     </div>
 
     <p class="instruction">According to the context, choose the correct verb:</p>
 
     <div id="quiz-container">
-        <p id="question"></p>
+        <p id="question">Loading first challenge...</p>
         <div class="options">
             <button onclick="check(0)">bring up</button>
             <button onclick="check(1)">brought up</button>
@@ -85,21 +86,52 @@
 
 <script>
     const questions = [
-        { q: "The baby often ______ a little milk after being fed.", correct: 0 },
-        { q: "During the quarterly review, Mark decided to ______ the budget cuts.", correct: 0 },
-        { q: "The company’s investigation ______ some alarming data.", correct: 3 },
-        { q: "He was ______ in London but moved to São Paulo as an adult.", correct: 1 },
-        { q: "The smell was so terrible that I thought I would ______.", correct: 2 },
-        { q: "I need to ______ the new project proposal at the next meeting.", correct: 0 },
-        { q: "She ______ all night because of food poisoning.", correct: 3 }
+        { q: "The baby often ______ a little milk after breastfeeding.", correct: 0 },
+        { q: "I didn't want to ______ the budget problem during the meeting.", correct: 0 },
+        { q: "He was ______ by his grandparents in the countryside.", correct: 1 },
+        { q: "The patient ______ three times last night due to the virus.", correct: 3 },
+        { q: "Don't ______ that sensitive subject now; he's very stressed.", correct: 0 },
+        { q: "She felt dizzy and thought she was going to ______.", correct: 2 },
+        { q: "Our team leader ______ an interesting point about the new project.", correct: 1 },
+        { q: "I was ______ to always be polite to everyone.", correct: 1 },
+        { q: "The dog ______ the bone it had swallowed earlier.", correct: 3 },
+        { q: "It's natural for infants to ______ a bit of food sometimes.", correct: 0 }
     ];
 
     let currentQuestionIndex = 0;
 
     function loadQuestion() {
-        const q = questions[currentQuestionIndex];
-        document.getElementById('question').innerText = q.q;
-        document.getElementById('feedback').innerText = "";
+        if (currentQuestionIndex < questions.length) {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('question').innerText = q.q;
+            document.getElementById('feedback').innerText = "";
+        }
     }
 
-    function check(
+    function check(selectedOptionIndex) {
+        const feedback = document.getElementById('feedback');
+        const correctOptionIndex = questions[currentQuestionIndex].correct;
+
+        if(selectedOptionIndex === correctOptionIndex) {
+            feedback.innerText = "EXCELLENT! ✓";
+            feedback.style.color = "yellow";
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if(currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    document.getElementById('quiz-container').innerHTML = "<h2 style='color: yellow; text-align: center;'>CONGRATULATIONS!<br>You mastered all 10 sentences!</h2>";
+                }
+            }, 1200);
+        } else {
+            feedback.innerText = "TRY AGAIN! ✗";
+            feedback.style.color = "#ff4444";
+        }
+    }
+
+    // Garante que a primeira pergunta carregue ao abrir a página
+    window.onload = loadQuestion;
+</script>
+
+</body>
+</html>
