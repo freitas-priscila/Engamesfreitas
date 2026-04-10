@@ -3,108 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freitas English Classes - Portal</title>
+    <title>As Várias Formas de Bring</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #000; color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
-        #login-screen { text-align: center; width: 90%; max-width: 400px; }
-        .login-box { border: 2px solid yellow; padding: 30px; border-radius: 20px; background-color: #111; }
-        h2 { color: yellow; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid yellow; background: #222; color: #fff; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; background-color: yellow; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        
-        #portal-screen { display: none; width: 90%; max-width: 600px; padding: 30px 0; }
-        .game-button { display: block; text-decoration: none; border: 2px solid yellow; border-radius: 15px; margin-bottom: 15px; padding: 20px; transition: 0.2s; }
-        .game-button:hover { background-color: #1a1a1a; transform: scale(1.02); }
-        .game-title { color: yellow; font-weight: bold; font-size: 1.1rem; display: block; }
-        .game-desc { color: white; font-size: 0.85rem; margin-top: 4px; display: block; }
-        h1 { color: yellow; text-align: center; margin-bottom: 30px; border-bottom: 2px solid yellow; padding-bottom: 10px; }
+        body { font-family: 'Courier New', Courier, monospace; background-color: #121212; color: white; display: flex; justify-content: center; padding: 20px; margin: 0; }
+        .container { max-width: 800px; width: 100%; }
+        h1 { color: yellow; text-align: center; text-transform: uppercase; border-bottom: 2px solid yellow; padding-bottom: 10px; font-size: 1.4rem; }
+        .explanations { margin-bottom: 25px; line-height: 1.5; background-color: #1e1e1e; padding: 15px; border-left: 5px solid yellow; font-size: 0.85rem; }
+        #quiz-container { background-color: #1e1e1e; padding: 25px; border: 1px solid #333; border-radius: 8px; }
+        #question { font-size: 1.2rem; margin-bottom: 25px; text-align: center; min-height: 70px; color: #fff; }
+        #progress { text-align: right; font-size: 0.8rem; color: yellow; margin-bottom: 10px; }
+        .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        button { padding: 18px; border: 2px solid #000; background-color: yellow !important; color: black !important; font-family: inherit; font-weight: bold; font-size: 1rem; text-transform: lowercase; cursor: pointer; transition: transform 0.1s; }
+        button:hover { filter: brightness(0.9); transform: scale(1.02); }
+        #feedback { text-align: center; font-weight: bold; margin-top: 20px; height: 25px; font-size: 1.1rem; }
+        .footer { text-align: center; margin-top: 40px; font-size: 0.75rem; border-top: 1px solid #333; padding-top: 10px; color: #666; }
     </style>
 </head>
 <body>
-
-    <div id="login-screen">
-        <div class="login-box">
-            <h2>STUDENT VALIDATION</h2>
-            <form id="accessForm">
-                <input type="text" id="studentName" placeholder="Seu Nome Completo" required>
-                <input type="password" id="studentPass" placeholder="Senha de Acesso" required>
-                <button type="submit" class="btn">ENTRAR NO PORTAL</button>
-            </form>
+<div class="container">
+    <h1>As Várias Formas de "Bring"</h1>
+    <div class="explanations">
+        <strong>Strategic Summary (B2):</strong><br>
+        • <strong>Bring:</strong> Transport to a place/person.<br>
+        • <strong>Bring along:</strong> Take with you (companion/extra object).<br>
+        • <strong>Bring over:</strong> Deliver to someone's house/office.<br>
+        • <strong>Bring up:</strong> Mention a topic / Raise a child / Regurgitate (golfar).
+    </div>
+    <div id="quiz-container">
+        <div id="progress">Question: 1/20</div>
+        <p id="question">Loading...</p>
+        <div class="options">
+            <button onclick="check('bring')">bring</button>
+            <button onclick="check('bring along')">bring along</button>
+            <button onclick="check('bring over')">bring over</button>
+            <button onclick="check('bring up')">bring up</button>
         </div>
+        <div id="feedback"></div>
     </div>
+    <div class="footer">jogos@freitasengoishclasses</div>
+</div>
 
-    <div id="portal-screen">
-        <h1>Learning Portal</h1>
-        
-        <a href="family-members-1.html" class="game-button">
-            <span class="game-title">Family Members 1</span>
-            <span class="game-desc">Basic vocabulary</span>
-        </a>
+<script>
+    const questions = [
+        { q: "Can you ______ me that report? It's on your desk.", correct: "bring" },
+        { q: "I will ______ the documents ______ to your office later today.", correct: "bring over" },
+        { q: "You should ______ a friend ______ to the workshop.", correct: "bring along" },
+        { q: "Please don't ______ that topic ______ during the meeting.", correct: "bring up" },
+        { q: "It is hard to ______ children ______ to be independent nowadays.", correct: "bring up" },
+        { q: "The baby might ______ a little bit of milk after feeding.", correct: "bring up" },
+        { q: "Don't forget to ______ your ID card to the exam.", correct: "bring along" },
+        { q: "I can ______ some dessert ______ to your house tonight.", correct: "bring over" },
+        { q: "Did you ______ the keys I asked for?", correct: "bring" },
+        { q: "Why do you have to ______ that old argument ______ again?", correct: "bring up" },
+        { q: "He likes to ______ his laptop ______ to every single class.", correct: "bring along" },
+        { q: "Could you ______ the car ______ for me to inspect it?", correct: "bring over" },
+        { q: "The company plans to ______ in a new consultant next month.", correct: "bring" },
+        { q: "It is natural for infants to ______ after being fed.", correct: "bring up" },
+        { q: "I need to ______ my notes ______ to the presentation.", correct: "bring along" },
+        { q: "I'll ______ the contract ______ to your apartment.", correct: "bring over" },
+        { q: "Is it a big responsibility to ______ a child properly?", correct: "bring up" },
+        { q: "You must ______ your umbrella; it's raining heavily.", correct: "bring along" },
+        { q: "Would you ______ me some water, please?", correct: "bring" },
+        { q: "He promised not to ______ the salary issue ______ today.", correct: "bring up" }
+    ];
 
-        <a href="family-members-advanced.html" class="game-button">
-            <span class="game-title">Family Members Advanced</span>
-            <span class="game-desc">Advanced relations</span>
-        </a>
-
-        <a href="fill-in-the-blanks-2-verb-to-be.html" class="game-button">
-            <span class="game-title">Verb to Be</span>
-            <span class="game-desc">Grammar practice</span>
-        </a>
-
-        <a href="memory-game-adjectives-people.html" class="game-button">
-            <span class="game-title">Adjectives: People</span>
-            <span class="game-desc">Memory challenge</span>
-        </a>
-
-        <a href="memory-game-occupations-freitasenglishclass.html" class="game-button">
-            <span class="game-title">Occupations</span>
-            <span class="game-desc">Professional vocabulary</span>
-        </a>
-
-        <a href="corporate-match.html" class="game-button">
-            <span class="game-title">Corporate Match</span>
-            <span class="game-desc">Business Email Phrases</span>
-        </a>
-
-        <a href="phrasal-verbs1-game.html" class="game-button">
-            <span class="game-title">Phrasal Verbs: Bring Up vs Throw Up</span>
-            <span class="game-desc">Strategic Business English</span>
-        </a>
-
-        <a href="as-varias-formas-de-bring.html" class="game-button">
-            <span class="game-title">As Várias Formas de Bring</span>
-            <span class="game-desc">20 Challenges (B2 Level)</span>
-        </a>
-    </div>
-
-    <script>
-        document.getElementById('accessForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('studentName').value;
-            const pass = document.getElementById('studentPass').value;
-
-            // Senha confirmada: pripri2024
-            if(pass === "pripri2024") {
-                
-                // --- INTEGRAÇÃO COM GOOGLE FORM ---
-                // Substitua os campos abaixo pelos IDs reais do seu Google Form
-                const formID = "SEU_ID_DO_FORM_AQUI"; 
-                const entryName = "entry.12345678"; // ID do campo Nome no Form
-                
-                const googleFormURL = `https://docs.google.com/forms/d/e/${formID}/formResponse?${entryName}=${encodeURIComponent(name)}&submit=Submit`;
-                
-                // Envia os dados de forma silenciosa
-                fetch(googleFormURL, { mode: 'no-cors' });
-
-                // Libera o portal
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('portal-screen').style.display = 'block';
-                document.body.style.justifyContent = 'flex-start';
-            } else {
-                alert("Incorrect password. Please try again.");
-            }
-        });
-    </script>
+    let current = 0;
+    function load() {
+        if (current < questions.length) {
+            document.getElementById('progress').innerText = `Question: ${current + 1}/${questions.length}`;
+            document.getElementById('question').innerText = questions[current].q;
+            document.getElementById('feedback').innerText = "";
+        }
+    }
+    function check(answer) {
+        const f = document.getElementById('feedback');
+        if(answer === questions[current].correct) {
+            f.innerText = "EXCELLENT! ✓"; f.style.color = "yellow";
+            setTimeout(() => {
+                current++;
+                if(current < questions.length) load();
+                else document.getElementById('quiz-container').innerHTML = "<h2 style='text-align:center; color:yellow;'>MISSION ACCOMPLISHED!<br>20/20 Mastered.</h2>";
+            }, 800);
+        } else {
+            f.innerText = "TRY AGAIN! ✗"; f.style.color = "#ff4444";
+        }
+    }
+    window.onload = load;
+</script>
 </body>
 </html>
+  
+
