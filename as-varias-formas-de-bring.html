@@ -1,181 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>As Várias Formas de Bring - REVISADO (B2)</title>
-    <style>
-        body { font-family: 'Courier New', Courier, monospace; background-color: #121212; color: white; display: flex; justify-content: center; padding: 20px; margin: 0; }
-        .container { max-width: 800px; width: 100%; }
-        h1 { color: yellow; text-align: center; text-transform: uppercase; border-bottom: 2px solid yellow; padding-bottom: 10px; font-size: 1.4rem; }
-        .explanations { margin-bottom: 25px; line-height: 1.5; background-color: #1e1e1e; padding: 15px; border-left: 5px solid yellow; font-size: 0.85rem; }
-        #quiz-container { background-color: #1e1e1e; padding: 25px; border: 1px solid #333; border-radius: 8px; position: relative; }
-        #question { font-size: 1.2rem; margin: 30px 0; text-align: center; min-height: 80px; color: #fff; line-height: 1.6; }
-        #header-info { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: yellow; margin-bottom: 10px; }
-        
-        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-        .option-btn { padding: 18px; border: 2px solid #000; background-color: yellow !important; color: black !important; font-family: inherit; font-weight: bold; font-size: 1rem; text-transform: lowercase; cursor: pointer; transition: 0.2s; }
-        .option-btn:hover { filter: brightness(0.9); transform: scale(1.02); }
-        .option-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; background-color: #555 !important; color: #aaa !important;}
-        
-        #feedback { text-align: center; font-weight: bold; height: 30px; font-size: 1.1rem; margin-top: 10px; margin-bottom: 20px;}
-        
-        #nav-controls { display: flex; justify-content: space-between; border-top: 1px solid #333; padding-top: 15px; }
-        .nav-btn { padding: 10px 20px; background: transparent; color: #aaa; border: 1px solid #444; border-radius: 4px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; font-family: inherit; }
-        .nav-btn:hover { color: white; border-color: yellow; }
-        .nav-btn:disabled { color: #555; border-color: #333; cursor: not-allowed; }
-        
-        .footer { text-align: center; margin-top: 40px; font-size: 0.75rem; border-top: 1px solid #333; padding-top: 10px; color: #666; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>As Várias Formas de Bring</title>
+
+<style>
+body {
+    font-family: 'Courier New', monospace;
+    background:#121212;
+    color:white;
+    display:flex;
+    justify-content:center;
+    padding:20px;
+}
+
+.container { max-width:800px; width:100%; }
+
+h1 {
+    color:yellow;
+    text-align:center;
+    border-bottom:2px solid yellow;
+    padding-bottom:10px;
+}
+
+.explanations {
+    background:#1e1e1e;
+    padding:15px;
+    border-left:5px solid yellow;
+    font-size:0.85rem;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+#quiz-container {
+    background:#1e1e1e;
+    padding:25px;
+    border-radius:8px;
+}
+
+#header {
+    display:flex;
+    justify-content:space-between;
+    color:yellow;
+    font-size:0.8rem;
+}
+
+#question {
+    text-align:center;
+    margin:30px 0;
+    font-size:1.2rem;
+}
+
+.options-grid {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.option-btn {
+    padding:15px;
+    background:yellow;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#feedback {
+    text-align:center;
+    margin:15px;
+    font-weight:bold;
+}
+
+#nav-controls {
+    display:flex;
+    justify-content:space-between;
+}
+
+.nav-btn {
+    padding:10px;
+    background:transparent;
+    border:1px solid #444;
+    color:#aaa;
+    cursor:pointer;
+}
+</style>
 </head>
+
 <body>
+
 <div class="container">
-    <h1>As Várias Formas de "Bring" - REVISADO (B2)</h1>
-    <div class="explanations">
-        <strong>Strategic Summary (B2 Level):</strong><br>
-        • <strong>Bring (along/over/up):</strong> Consider tense, aspect, and person conjugation.<br>
-        • <strong>Bring (brought/brings):</strong> Conjugations are now dynamic and required.<br>
-        • Multiple correct options are now accepted for some phrases.
-    </div>
-    <div id="quiz-container">
-        <div id="header-info">
-            <span id="progress-text">Question: 1/20</span>
-            <span id="score-text">Score: 0</span>
-        </div>
-        <p id="question">Loading first challenge...</p>
-        
-        <div class="options-grid">
-            <button class="option-btn" id="btn-bring" onclick="check('bring')">bring</button>
-            <button class="option-btn" id="btn-bring along" onclick="check('bring along')">bring along</button>
-            <button class="option-btn" id="btn-bring over" onclick="check('bring over')">bring over</button>
-            <button class="option-btn" id="btn-bring up" onclick="check('bring up')">bring up</button>
-            
-            <button class="option-btn" id="btn-brings along" onclick="check('brings along')">brings along</button>
-            <button class="option-btn" id="btn-brings up" onclick="check('brings up')">brings up</button>
-            <button class="option-btn" id="btn-brought along" onclick="check('brought along')">brought along</button>
-            <button class="option-btn" id="btn-brought up" onclick="check('brought up')">brought up</button>
-        </div>
-        
-        <div id="feedback"></div>
-        
-        <div id="nav-controls">
-            <button id="prev-btn" class="nav-btn" onclick="prevQuestion()" disabled>⏪ Review Previous</button>
-            <button id="next-btn" class="nav-btn" onclick="nextQuestion()" disabled>Next Challenge ⏩</button>
-        </div>
-    </div>
-    <div class="footer">jogos@freitasengoishclasses | Student persistency update</div>
+
+<h1>As Várias Formas de "Bring"</h1>
+
+<div class="explanations">
+<strong>Meaning Guide:</strong><br>
+• bring = trazer<br>
+• bring along = trazer junto<br>
+• bring over = trazer até outro lugar<br>
+• bring up = criar / mencionar<br><br>
+
+<strong>Grammar:</strong><br>
+bring (base) | brings (he/she) | brought (past)
+</div>
+
+<div id="quiz-container">
+
+<div id="header">
+<span id="progress"></span>
+<span id="score"></span>
+</div>
+
+<p id="question"></p>
+
+<div class="options-grid">
+<button class="option-btn" onclick="check('bring')">bring</button>
+<button class="option-btn" onclick="check('bring along')">bring along</button>
+<button class="option-btn" onclick="check('bring over')">bring over</button>
+<button class="option-btn" onclick="check('bring up')">bring up</button>
+
+<button class="option-btn" onclick="check('brings along')">brings along</button>
+<button class="option-btn" onclick="check('brings up')">brings up</button>
+<button class="option-btn" onclick="check('brought along')">brought along</button>
+<button class="option-btn" onclick="check('brought up')">brought up</button>
+</div>
+
+<div id="feedback"></div>
+
+<div id="nav-controls">
+<button class="nav-btn" onclick="prev()">⏪ Voltar</button>
+<button class="nav-btn" onclick="next()">Próxima ⏩</button>
+</div>
+
+</div>
 </div>
 
 <script>
-    // Lista de perguntas Revisada
-    const questions = [
-        // AJUSTE CRUCIAL: Agora aceita múltiplos corretos
-        { q: "She ______ her kids ______ to be very independent.", 
-          correct: ["brings up", "brought up"], 
-          fb: "CORRECT! ✓ (Acceptable in Present/Habit or Past)" 
-        },
-        
-        { q: "Remember to ______ your ID card to the exam.", correct: ["bring", "bring along"], fb: "EXCELLENT! ✓" },
-        { q: "He ______ his laptop ______ to every single class.", correct: ["brings along"], fb: "CORRECT! ✓ (He brings... present conjugation for 'he')" },
-        { q: "They were ______ in a very traditional family.", correct: ["brought up"], fb: "EXCELLENT! ✓ (Passive voice: They were brought up...)" },
-        { q: "You should have been ______ to respect your elders.", correct: ["brought up"], fb: "EXCELLENT! ✓ (Should have been brought up...)" },
-        
-        // Outras questões B2 Revisadas
-        { q: "Can you ______ me that report? It's on your desk.", correct: ["bring"], fb: "✓" },
-        { q: "I will ______ the documents ______ to your office later today.", correct: ["bring over"], fb: "✓" },
-        { q: "Feel free to ______ a friend ______ to the workshop.", correct: ["bring along"], fb: "✓" },
-        { q: "Please don't ______ that topic ______ during the meeting.", correct: ["bring up"], fb: "✓" },
-        { q: "The company will ______ in a new consultant next month.", correct: ["bring"], fb: "✓" },
-        { q: "He promised not to ______ the salary issue ______ today.", correct: ["bring up"], fb: "✓" },
-        { q: "I need to ______ my notes ______ to the presentation.", correct: ["bring along"], fb: "✓" },
-        { q: "I'll ______ the contract ______ to your apartment.", correct: ["bring over"], fb: "✓" },
-        { q: "Is it a big responsibility to ______ a child properly?", correct: ["bring up"], fb: "✓" },
-        { q: "You must ______ your umbrella; it's raining heavily.", correct: ["bring along"], fb: "✓" },
-        { q: "Would you ______ me some water, please?", correct: ["bring"], fb: "✓" },
-        { q: "Baby elephants are usually ______ by the whole herd.", correct: ["brought up"], fb: "✓ (Particípio/Passiva)" },
-        { q: "Did you ______ the keys I asked for?", correct: ["bring"], fb: "✓" },
-        { q: "It is natural for infants to ______ after being fed.", correct: ["bring up"], fb: "✓ (Infinitivo)" },
-        { q: "I'll ______ some dessert ______ to your house tonight.", correct: ["bring over"], fb: "✓" }
-    ];
 
-    let current = 0;
-    let score = 0;
-    //answered[current] armazenará: null (não respondeu), answer (correto), 'wrong' (errou e tentará de novo)
-    let answered = Array(questions.length).fill(null); 
+const questions = [
 
-    function loadQuestion() {
-        const qData = questions[current];
-        document.getElementById('progress-text').innerText = `Question: ${current + 1}/${questions.length}`;
-        document.getElementById('question').innerText = qData.q;
-        document.getElementById('feedback').innerText = "";
-        
-        // Gerenciar Controles de Navegação
-        document.getElementById('prev-btn').disabled = (current === 0);
-        
-        // Ativar Next se já respondeu CORRETAMENTE no passado
-        document.getElementById('next-btn').disabled = (answered[current] === null || answered[current] === 'wrong'); 
+{q:"She ______ her kids to be very independent.", correct:["brings up","brought up"]},
 
-        // Ativar botões se não respondeu corretamente
-        toggleOptionButtons(answered[current] === null || answered[current] === 'wrong');
-    }
+{q:"Remember to ______ your ID card to the exam.", correct:["bring","bring along"]},
 
-    function toggleOptionButtons(enable) {
-        const optionBtns = document.querySelectorAll('.option-btn');
-        optionBtns.forEach(btn => {
-            btn.disabled = !enable; 
-        });
-    }
+{q:"He ______ his laptop to every class.", correct:["brings along"]},
 
-    function check(answer) {
-        // Se já respondeu corretamente, não faz nada
-        if (answered[current] !== null && answered[current] !== 'wrong') return; 
+{q:"They were ______ in a traditional family.", correct:["brought up"]},
 
-        const qData = questions[current];
-        const f = document.getElementById('feedback');
-        
-        // AJUSTE: qData.correct agora é uma ARRAY de opções aceitáveis
-        if (qData.correct.includes(answer)) {
-            answered[current] = answer; // Registra a resposta CORRETA dada
-            if (score <= current) score++; // Incrementa score apenas uma vez por questão
-            document.getElementById('score-text').innerText = `Score: ${score}`;
-            f.innerText = qData.fb; f.style.color = "yellow";
-            
-            toggleOptionButtons(false); // Desativa botões após acertar
-            document.getElementById('next-btn').disabled = false; // Ativa Next
-            
-            // Avanço automático apenas no ACERTO
-            setTimeout(() => { nextQuestion(); }, 1500); 
-        } else {
-            // ERRO: O Aluno deve tentar de novo
-            answered[current] = 'wrong'; // Registra que tentou errado
-            f.innerText = "TRY AGAIN! ✗. Think about the meaning or conjugation."; f.style.color = "#ff4444";
-            
-            // Mantém os botões ATIVOS para o aluno tentar de novo (NÃO REVELA A RESPOSTA)
-            toggleOptionButtons(true);
-            document.getElementById('next-btn').disabled = true; // Impede avançar sem acertar
-        }
-    }
+{q:"You should have been ______ to respect your elders.", correct:["brought up"]},
 
-    function prevQuestion() {
-        if (current > 0) {
-            current--;
-            loadQuestion();
-        }
-    }
+{q:"Can you ______ me that report?", correct:["bring"]},
 
-    function nextQuestion() {
-        if (current < questions.length - 1) {
-            current++;
-            loadQuestion();
-        } else if (answered[current] !== null && answered[current] !== 'wrong') {
-            // Fim do Jogo
-            document.getElementById('quiz-container').innerHTML = `<h2 style='text-align:center; color:yellow;'>MISSION ACCOMPLISHED!<br>Final Score: ${score}/20</h2><p style='text-align:center; color:#fff;'>Persistency is key. Great job!</p>`;
-        }
-    }
+{q:"I will ______ the documents later.", correct:["bring over"]},
 
-    // Carregar primeira questão
-    window.onload = loadQuestion;
+{q:"Feel free to ______ a friend.", correct:["bring along"]},
+
+{q:"Don't ______ that topic.", correct:["bring up"]},
+
+{q:"He promised not to ______ the issue today.", correct:["bring up"]},
+
+{q:"I need to ______ my notes.", correct:["bring along"]},
+
+{q:"I'll ______ dessert tonight.", correct:["bring over"]},
+
+{q:"Is it hard to ______ a child properly?", correct:["bring up"]},
+
+{q:"You must ______ your umbrella.", correct:["bring along"]},
+
+{q:"Would you ______ me some water?", correct:["bring"]},
+
+{q:"Baby elephants are ______ by the herd.", correct:["brought up"]},
+
+{q:"Did you ______ the keys?", correct:["bring"]},
+
+{q:"It's natural for babies to ______ milk after feeding.", correct:["bring up"]},
+
+{q:"I'll ______ drinks to your house.", correct:["bring over"]},
+
+{q:"She always ______ snacks to meetings.", correct:["brings along"]}
+
+];
+
+let current = 0;
+let score = 0;
+
+function load(){
+document.getElementById("question").innerText = questions[current].q;
+document.getElementById("progress").innerText = `Question ${current+1}/${questions.length}`;
+document.getElementById("score").innerText = `Score: ${score}`;
+document.getElementById("feedback").innerText = "";
+}
+
+function speak(text){
+let speech = new SpeechSynthesisUtterance(text);
+speech.lang = "en-US";
+speech.rate = 0.9;
+speechSynthesis.speak(speech);
+}
+
+function check(answer){
+let q = questions[current];
+
+if(q.correct.includes(answer)){
+score++;
+document.getElementById("feedback").innerText = "Correct ✓";
+
+let sentence = q.q.replace("______", answer);
+speak(sentence);
+
+} else {
+document.getElementById("feedback").innerText = "Try again ✗";
+}
+}
+
+function next(){
+if(current < questions.length-1){
+current++;
+load();
+}
+}
+
+function prev(){
+if(current > 0){
+current--;
+load();
+}
+}
+
+load();
+
 </script>
+
 </body>
 </html>
-      
