@@ -3,92 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freitas English Classes - Validação</title>
+    <title>Freitas English Classes - Portal</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #000;
-            color: #fff;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        /* TELA DE VALIDAÇÃO (LOGIN) */
-        #validation-screen {
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-        }
-        .login-box {
-            border: 2px solid yellow;
-            padding: 30px;
-            border-radius: 20px;
-            background-color: #111;
-        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #000; color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        #login-screen { text-align: center; width: 90%; max-width: 400px; }
+        .login-box { border: 2px solid yellow; padding: 30px; border-radius: 20px; background-color: #111; }
         h2 { color: yellow; margin-bottom: 20px; }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid yellow;
-            background: #222;
-            color: #fff;
-            box-sizing: border-box;
-        }
-        .access-btn {
-            width: 100%;
-            padding: 15px;
-            background-color: yellow;
-            color: black;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        /* TELA DOS JOGOS (ESCONDIDA INICIALMENTE) */
-        #portal-screen {
-            display: none;
-            width: 90%;
-            max-width: 600px;
-            padding: 30px 0;
-        }
-        .game-button {
-            display: block;
-            text-decoration: none;
-            border: 2px solid yellow;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            padding: 20px;
-            transition: 0.2s;
-        }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid yellow; background: #222; color: #fff; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; background-color: yellow; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        
+        #portal-screen { display: none; width: 90%; max-width: 600px; padding: 30px 0; }
+        .game-button { display: block; text-decoration: none; border: 2px solid yellow; border-radius: 15px; margin-bottom: 15px; padding: 20px; transition: 0.2s; }
         .game-button:hover { background-color: #1a1a1a; transform: scale(1.02); }
-        .game-title { color: yellow; font-weight: bold; display: block; }
-        .game-desc { color: #fff; font-size: 0.85rem; }
+        .game-title { color: yellow; font-weight: bold; font-size: 1.1rem; display: block; }
+        .game-desc { color: white; font-size: 0.85rem; margin-top: 4px; display: block; }
+        h1 { color: yellow; text-align: center; margin-bottom: 30px; border-bottom: 2px solid yellow; padding-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="validation-screen">
+    <div id="login-screen">
         <div class="login-box">
-            <h2>ACESSO RESTRITO</h2>
-            <form id="studentForm">
-                <input type="text" id="name" placeholder="Seu Nome Completo" required>
-                <input type="password" id="password" placeholder="Senha de Acesso" required>
-                <button type="submit" class="access-btn">VALIDAR E ENTRAR</button>
+            <h2>STUDENT VALIDATION</h2>
+            <form id="accessForm">
+                <input type="text" id="studentName" placeholder="Seu Nome Completo" required>
+                <input type="password" id="studentPass" placeholder="Senha de Acesso" required>
+                <button type="submit" class="btn">ENTRAR NO PORTAL</button>
             </form>
         </div>
     </div>
 
     <div id="portal-screen">
-        <h1 style="color: yellow; text-align: center;">Learning Portal</h1>
+        <h1>Learning Portal</h1>
         
+        <a href="family-members-1.html" class="game-button">
+            <span class="game-title">Family Members 1</span>
+            <span class="game-desc">Basic vocabulary</span>
+        </a>
+
+        <a href="family-members-advanced.html" class="game-button">
+            <span class="game-title">Family Members Advanced</span>
+            <span class="game-desc">Advanced relations</span>
+        </a>
+
+        <a href="fill-in-the-blanks-2-verb-to-be.html" class="game-button">
+            <span class="game-title">Verb to Be</span>
+            <span class="game-desc">Grammar practice</span>
+        </a>
+
+        <a href="memory-game-adjectives-people.html" class="game-button">
+            <span class="game-title">Adjectives: People</span>
+            <span class="game-desc">Memory challenge</span>
+        </a>
+
+        <a href="memory-game-occupations-freitasenglishclass.html" class="game-button">
+            <span class="game-title">Occupations</span>
+            <span class="game-desc">Professional vocabulary</span>
+        </a>
+
+        <a href="corporate-match.html" class="game-button">
+            <span class="game-title">Corporate Match</span>
+            <span class="game-desc">Business Email Phrases</span>
+        </a>
+
         <a href="phrasal-verbs1-game.html" class="game-button">
             <span class="game-title">Phrasal Verbs: Bring Up vs Throw Up</span>
             <span class="game-desc">Strategic Business English</span>
@@ -98,27 +75,34 @@
             <span class="game-title">As Várias Formas de Bring</span>
             <span class="game-desc">20 Challenges (B2 Level)</span>
         </a>
-
-        </div>
+    </div>
 
     <script>
-        document.getElementById('studentForm').addEventListener('submit', function(e) {
+        document.getElementById('accessForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
-            const pass = document.getElementById('password').value;
+            const name = document.getElementById('studentName').value;
+            const pass = document.getElementById('studentPass').value;
 
-            // 1. ENVIA PARA O SEU GOOGLE FORM (Substitua o link abaixo pelo seu link do Form)
-            const formURL = "SEU_LINK_DO_GOOGLE_FORM_AQUI"; 
-            
-            // Aqui ele simula o envio e libera o portal
-            if(pass === "aluno2026") { // Coloque aqui a senha que você quer
-                // Esconde login e mostra portal
-                document.getElementById('validation-screen').style.display = 'none';
+            // Senha confirmada: pripri2024
+            if(pass === "pripri2024") {
+                
+                // --- INTEGRAÇÃO COM GOOGLE FORM ---
+                // Substitua os campos abaixo pelos IDs reais do seu Google Form
+                const formID = "SEU_ID_DO_FORM_AQUI"; 
+                const entryName = "entry.12345678"; // ID do campo Nome no Form
+                
+                const googleFormURL = `https://docs.google.com/forms/d/e/${formID}/formResponse?${entryName}=${encodeURIComponent(name)}&submit=Submit`;
+                
+                // Envia os dados de forma silenciosa
+                fetch(googleFormURL, { mode: 'no-cors' });
+
+                // Libera o portal
+                document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('portal-screen').style.display = 'block';
                 document.body.style.justifyContent = 'flex-start';
             } else {
-                alert("Senha incorreta. Verifique com a Professora Priscila.");
+                alert("Incorrect password. Please try again.");
             }
         });
     </script>
