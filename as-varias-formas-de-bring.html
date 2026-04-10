@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>As Várias Formas de Bring</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #121212;
+            color: white;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container { max-width: 800px; width: 100%; }
+        h1 { color: yellow; text-align: center; text-transform: uppercase; border-bottom: 2px solid yellow; padding-bottom: 10px; font-size: 1.4rem; }
+        
+        .explanations { 
+            margin-bottom: 25px; 
+            line-height: 1.5; 
+            background-color: #1e1e1e; 
+            padding: 15px; 
+            border-left: 5px solid yellow;
+            font-size: 0.85rem;
+        }
+
+        #quiz-container { background-color: #1e1e1e; padding: 25px; border: 1px solid #333; border-radius: 8px; }
+        #question { font-size: 1.2rem; margin-bottom: 25px; text-align: center; min-height: 70px; color: #fff; }
+        #progress { text-align: right; font-size: 0.8rem; color: yellow; margin-bottom: 10px; }
+        
+        .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        
+        button {
+            padding: 18px;
+            border: 2px solid #000;
+            background-color: yellow !important;
+            color: black !important;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: lowercase;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        button:hover { filter: brightness(0.9); transform: scale(1.02); }
+        
+        #feedback { text-align: center; font-weight: bold; margin-top: 20px; height: 25px; font-size: 1.1rem; }
+        .footer { text-align: center; margin-top: 40px; font-size: 0.75rem; border-top: 1px solid #333; padding-top: 10px; color: #666; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>As Várias Formas de "Bring"</h1>
+
+    <div class="explanations">
+        <strong>Strategic Summary (B2):</strong><br>
+        • <strong>Bring:</strong> Transport to a place/person.<br>
+        • <strong>Bring along:</strong> Take with you (companion/extra object).<br>
+        • <strong>Bring over:</strong> Deliver to someone's house/office.<br>
+        • <strong>Bring up:</strong> Mention a topic / Raise a child / Regurgitate (golfar).
+    </div>
+
+    <div id="quiz-container">
+        <div id="progress">Question: 1/20</div>
+        <p id="question">Loading...</p>
+        <div class="options">
+            <button onclick="check('bring')">bring</button>
+            <button onclick="check('bring along')">bring along</button>
+            <button onclick="check('bring over')">bring over</button>
+            <button onclick="check('bring up')">bring up</button>
+        </div>
+        <div id="feedback"></div>
+    </div>
+
+    <div class="footer">jogos@freitasengoishclasses</div>
+</div>
+
+<script>
+    const questions = [
+        { q: "Can you ______ me that report? It's on your desk.", correct: "bring" },
+        { q: "I'll ______ the documents ______ to your office later today.", correct: "bring over" },
+        { q: "Feel free to ______ a friend ______ to the workshop.", correct: "bring along" },
+        { q: "Please don't ______ that topic ______ during the meeting.", correct: "bring up" },
+        { q: "She ______ her kids ______ to be very independent.", correct: "bring up" },
+        { q: "The baby often ______ a little bit of milk after feeding.", correct: "bring up" },
+        { q: "Remember to ______ your ID card to the exam.", correct: "bring along" },
+        { q: "I'll ______ some dessert ______ to your house tonight.", correct: "bring over" },
+        { q: "Did you ______ the keys I asked for?", correct: "bring" },
+        { q: "Why did you ______ that old argument ______ again?", correct: "bring up" },
+        { q: "He ______ his laptop ______ to every single class.", correct: "bring along" },
+        { q: "Can you ______ the car ______ for me to see it?", correct: "bring over" },
+        { q: "The company will ______ in a new consultant next month.", correct: "bring" },
+        { q: "It's natural for infants to ______ after being fed.", correct: "bring up" },
+        { q: "I need to ______ my notes ______ to the presentation.", correct: "bring along" },
+        { q: "I'll ______ the contract ______ to your apartment.", correct: "bring over" },
+        { q: "They were ______ in a very traditional family.", correct: "bring up" },
+        { q: "Don't forget to ______ your umbrella; it's raining.", correct: "bring along" },
+        { q: "Could you ______ me some water, please?", correct: "bring" },
+        { q: "He promised not to ______ the salary issue ______ today.", correct: "bring up" }
+    ];
+
+    let current = 0;
+    function load() {
+        if (current < questions.length) {
+            document.getElementById('progress').innerText = `Question: ${current + 1}/${questions.length}`;
+            document.getElementById('question').innerText = questions[current].q;
+            document.getElementById('feedback').innerText = "";
+        }
+    }
+
+    function check(answer) {
+        const f = document.getElementById('feedback');
+        if(answer === questions[current].correct) {
+            f.innerText = "EXCELLENT! ✓"; f.style.color = "yellow";
+            setTimeout(() => {
+                current++;
+                if(current < questions.length) load();
+                else document.getElementById('quiz-container').innerHTML = "<h2 style='text-align:center; color:yellow;'>MISSION ACCOMPLISHED!<br>20/20 Mastered.</h2>";
+            }, 800);
+        } else {
+            f.innerText = "TRY AGAIN! ✗"; f.style.color = "#ff4444";
+        }
+    }
+    window.onload = load;
+</script>
+</body>
+</html>
