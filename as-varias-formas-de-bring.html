@@ -63,18 +63,26 @@ h1 {
     background:yellow;
     color:black;
     font-weight:bold;
+    border:none;
     cursor:pointer;
+    transition: 0.2s;
+}
+
+.option-btn:hover {
+    background:#ffeb3b;
 }
 
 #feedback {
     text-align:center;
     margin:15px;
     font-weight:bold;
+    height: 20px;
 }
 
 #nav-controls {
     display:flex;
     justify-content:space-between;
+    margin-top: 20px;
 }
 
 .nav-btn {
@@ -104,7 +112,8 @@ h1 {
 <strong>Grammar Tip:</strong><br>
 • bring (base form)<br>
 • brings (he / she / it)<br>
-• brought (past form)
+• brought (past form)<br>
+• bringing (after verbs like 'avoid')
 </div>
 
 <div id="quiz-container">
@@ -116,17 +125,7 @@ h1 {
 
 <p id="question"></p>
 
-<div class="options-grid">
-<button class="option-btn" onclick="check('bring')">bring</button>
-<button class="option-btn" onclick="check('bring along')">bring along</button>
-<button class="option-btn" onclick="check('bring over')">bring over</button>
-<button class="option-btn" onclick="check('bring up')">bring up</button>
-<button class="option-btn" onclick="check('bring up')">bringing up</button>
-<button class="option-btn" onclick="check('brings along')">brings along</button>
-<button class="option-btn" onclick="check('brings up')">brings up</button>
-<button class="option-btn" onclick="check('brought along')">brought along</button>
-<button class="option-btn" onclick="check('brought up')">brought up</button>
-</div>
+<div id="options" class="options-grid"></div>
 
 <div id="feedback"></div>
 
@@ -141,98 +140,87 @@ h1 {
 <script>
 
 const questions = [
-
-{q:"She ______ her children to be independent and responsible.", correct:["brings up","brought up"]},
-
-{q:"Remember to ______ your ID to the exam.", correct:["bring","bring along"]},
-
-{q:"He always ______ his laptop to important meetings.", correct:["brings along"]},
-
-{q:"They were ______ in a very strict environment.", correct:["brought up"]},
-
-{q:"You should have been ______ to show more respect.", correct:["brought up"]},
-
-{q:"Could you ______ me that file from your office?", correct:["bring"]},
-
-{q:"I’ll ______ the documents to your place later today.", correct:["bring over"]},
-
-{q:"Feel free to ______ a friend to the event.", correct:["bring along"]},
-
-{q:"Don't ______ that issue during the meeting.", correct:["bring up"]},
-
-{q:"He avoided ______ the problem in front of everyone.", correct:["bringing up"]},
-
-{q:"I need to ______ my notes to the presentation.", correct:["bring along"]},
-
-{q:"I'll ______ some drinks to your house tonight.", correct:["bring over"]},
-
-{q:"It’s not easy to ______ a child in today's world.", correct:["bring up"]},
-
-{q:"Make sure to ______ a jacket; it might get cold.", correct:["bring along"]},
-
-{q:"Can you ______ me a glass of water?", correct:["bring"]},
-
-{q:"Many children are ______ by their grandparents.", correct:["brought up"]},
-
-{q:"Did you ______ the keys I asked for?", correct:["bring"]},
-
-{q:"It’s common for babies to ______ milk after feeding.", correct:["bring up"]},
-
-{q:"I’ll ______ dessert to your place later.", correct:["bring over"]},
-
-{q:"She always ______ snacks to long meetings.", correct:["brings along"]}
-
+{q:"She ______ her children to be independent and responsible.", options:["brings up","brought up", "bring up", "bring"], correct:["brings up","brought up"]},
+{q:"Remember to ______ your ID to the exam.", options:["bring","bring along", "brought", "bringing"], correct:["bring","bring along"]},
+{q:"He always ______ his laptop to important meetings.", options:["brings along", "bring along", "brought", "brings"], correct:["brings along"]},
+{q:"They were ______ in a very strict environment.", options:["brought up", "bring up", "brings up", "bringing up"], correct:["brought up"]},
+{q:"You should have been ______ to show more respect.", options:["brought up", "bring up", "bringing up", "brings up"], correct:["brought up"]},
+{q:"Could you ______ me that file from your office?", options:["bring", "brought", "brings", "bringing"], correct:["bring"]},
+{q:"I’ll ______ the documents to your place later today.", options:["bring over", "bring up", "bring along", "bring"], correct:["bring over"]},
+{q:"Feel free to ______ a friend to the event.", options:["bring along", "bring over", "bring up", "bring"], correct:["bring along"]},
+{q:"Don't ______ that issue during the meeting.", options:["bring up", "brought up", "brings up", "bringing up"], correct:["bring up"]},
+{q:"He avoided ______ the problem in front of everyone.", options:["bringing up", "bring up", "brought up", "brings up"], correct:["bringing up"]},
+{q:"I need to ______ my notes to the presentation.", options:["bring along", "bring", "brought", "brings"], correct:["bring along"]},
+{q:"I'll ______ some drinks to your house tonight.", options:["bring over", "bring along", "bring up", "bring"], correct:["bring over"]},
+{q:"It’s not easy to ______ a child in today's world.", options:["bring up", "brought up", "brings up", "bringing up"], correct:["bring up"]},
+{q:"Make sure to ______ a jacket; it might get cold.", options:["bring along", "bring over", "bring", "brought"], correct:["bring along"]},
+{q:"Can you ______ me a glass of water?", options:["bring", "brings", "brought", "bringing"], correct:["bring"]},
+{q:"Many children are ______ by their grandparents.", options:["brought up", "bring up", "bringing up", "brings up"], correct:["brought up"]},
+{q:"Did you ______ the keys I asked for?", options:["bring", "brought", "brings", "bringing"], correct:["bring"]},
+{q:"It’s common for babies to ______ milk after feeding.", options:["bring up", "brought up", "bringing up", "brings up"], correct:["bring up"]},
+{q:"I’ll ______ dessert to your place later.", options:["bring over", "bring up", "bring along", "bring"], correct:["bring over"]},
+{q:"She always ______ snacks to long meetings.", options:["brings along", "bring along", "brought", "brings"] , correct:["brings along"]}
 ];
 
 let current = 0;
 let score = 0;
 
 function load(){
-document.getElementById("question").innerText = questions[current].q;
-document.getElementById("progress").innerText = `Question ${current+1}/${questions.length}`;
-document.getElementById("score").innerText = `Score: ${score}`;
-document.getElementById("feedback").innerText = "";
+    const q = questions[current];
+    document.getElementById("question").innerText = q.q;
+    document.getElementById("progress").innerText = `Question ${current+1}/${questions.length}`;
+    document.getElementById("score").innerText = `Score: ${score}`;
+    document.getElementById("feedback").innerText = "";
+    
+    // Gerar botões de opção
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+    q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerText = opt;
+        btn.onclick = () => check(opt);
+        optionsDiv.appendChild(btn);
+    });
 }
 
 function speak(text){
-let speech = new SpeechSynthesisUtterance(text);
-speech.lang = "en-US";
-speech.rate = 0.9;
-speechSynthesis.speak(speech);
+    let speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.rate = 0.9;
+    window.speechSynthesis.speak(speech);
 }
 
 function check(answer){
-let q = questions[current];
-
-if(q.correct.includes(answer)){
-score++;
-document.getElementById("feedback").innerText = "Correct ✓";
-
-let sentence = q.q.replace("______", answer);
-speak(sentence);
-
-} else {
-document.getElementById("feedback").innerText = "Try again ✗";
-}
+    let q = questions[current];
+    if(q.correct.includes(answer)){
+        score++;
+        document.getElementById("score").innerText = `Score: ${score}`;
+        document.getElementById("feedback").style.color = "yellow";
+        document.getElementById("feedback").innerText = "Correct ✓";
+        let sentence = q.q.replace("______", answer);
+        speak(sentence);
+    } else {
+        document.getElementById("feedback").style.color = "red";
+        document.getElementById("feedback").innerText = "Try again ✗";
+    }
 }
 
 function next(){
-if(current < questions.length-1){
-current++;
-load();
-}
+    if(current < questions.length-1){
+        current++;
+        load();
+    }
 }
 
 function prev(){
-if(current > 0){
-current--;
-load();
-}
+    if(current > 0){
+        current--;
+        load();
+    }
 }
 
 load();
-
 </script>
-
 </body>
 </html>
