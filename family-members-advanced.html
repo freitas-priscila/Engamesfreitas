@@ -17,7 +17,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-white);
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,12 +26,12 @@
         }
 
         header { text-align: center; margin-bottom: 30px; }
-        h1 { color: var(--text-yellow); margin: 5px 0; }
+        h1 { color: var(--text-yellow); margin: 5px 0; text-transform: uppercase; border-bottom: 2px solid var(--text-yellow); padding-bottom: 5px; }
         p { color: var(--text-white); margin: 5px 0; font-size: 1.1rem; }
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 15px;
             max-width: 1000px;
             width: 100%;
@@ -53,12 +53,11 @@
             border-radius: 10px;
         }
 
-        /* A correção principal: 180deg */
         .card.flipped .card-inner {
             transform: rotateY(180deg);
         }
 
-        .card-front, .card-back {
+        .card-front-face, .card-back-face {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -74,28 +73,29 @@
             font-weight: bold;
         }
 
-        .card-back {
+        .card-back-face {
             background-color: var(--card-back);
             color: var(--text-yellow);
             font-size: 2.5rem;
         }
 
-        .card-front {
+        .card-front-face {
             background-color: var(--card-front);
             color: #000000;
             transform: rotateY(180deg);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        .emoji { font-size: 2rem; margin-bottom: 8px; }
+        .emoji { font-size: 2.2rem; margin-bottom: 8px; }
 
         .matched .card-inner {
             border-color: #4CAF50;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
-        button {
-            margin-top: 30px;
+        .controls { margin-top: 30px; display: flex; gap: 20px; }
+        
+        .btn {
             background: var(--text-yellow);
             color: black;
             border: none;
@@ -103,6 +103,7 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
+            text-decoration: none;
             font-size: 1rem;
         }
     </style>
@@ -116,7 +117,10 @@
 
     <div class="game-grid" id="grid"></div>
 
-    <button onclick="startGame()">Reset Game</button>
+    <div class="controls">
+        <button class="btn" onclick="startGame()">Reset Game</button>
+        <a href="index.html" class="btn">Back to Portal</a>
+    </div>
 
     <script>
         const vocabulary = [
@@ -144,10 +148,18 @@
         let matchedPairs = 0;
         let canFlip = true;
 
-        function speak(text, isEnglish) {
+        function speak(text, type) {
+            // Se for Português, não fala nada
+            if (type === 'pt') return;
+
             window.speechSynthesis.cancel();
-            const msg = new SpeechSynthesisUtterance(text);
-            msg.lang = isEnglish ? 'en-US' : 'pt-BR';
+            
+            // Limpa o texto para o áudio: remove "/" e "()"
+            let cleanText = text.replace(/\//g, " and ").replace(/\(/g, "").replace(/\)/g, "");
+            
+            const msg = new SpeechSynthesisUtterance(cleanText);
+            msg.lang = 'en-US';
+            msg.rate = 0.9;
             window.speechSynthesis.speak(msg);
         }
 
@@ -171,8 +183,8 @@
                 card.className = 'card';
                 card.innerHTML = `
                     <div class="card-inner">
-                        <div class="card-back">?</div>
-                        <div class="card-front">
+                        <div class="card-back-face">?</div>
+                        <div class="card-front-face">
                             <span class="emoji">${data.icon}</span>
                             <span>${data.text}</span>
                         </div>
@@ -187,7 +199,7 @@
             if (!canFlip || cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
 
             cardElement.classList.add('flipped');
-            speak(data.text, data.type === 'en');
+            speak(data.text, data.type);
             flippedCards.push({ element: cardElement, data: data });
 
             if (flippedCards.length === 2) {
@@ -206,7 +218,7 @@
                 canFlip = true;
                 matchedPairs++;
                 if (matchedPairs === vocabulary.length) {
-                    setTimeout(() => alert('Congratulations! All pairs found!'), 500);
+                    setTimeout(() => alert('Congratulations! You mastered the Advanced Family Members!'), 500);
                 }
             } else {
                 setTimeout(() => {
@@ -218,8 +230,6 @@
             }
         }
 
-        // Pre-load voices
-        window.speechSynthesis.getVoices();
         startGame();
     </script>
 </body>
