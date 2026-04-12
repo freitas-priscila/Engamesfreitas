@@ -44,7 +44,8 @@
             { id: "q6", text: "We [input] not students.", ans: "are", emoji: "📚", audio: "We are not students" },
             { id: "q7", text: "Paulo and Maria [input] young.", ans: "aren't", emoji: "👴👵", audio: "Paulo and Maria aren't young" },
             { id: "q8", text: "Anna [input] happy.", ans: "isn't", emoji: "🙁", audio: "Anna isn't happy" },
-            { id: "q9", text: "The boys [input] friends.", ans: "'re", emoji: "🤝", audio: "The boys are friends" },
+            // AJUSTE CIRÚRGICO AQUI: Trocado de "'re" para "are"
+            { id: "q9", text: "The boys [input] friends.", ans: "are", emoji: "🤝", audio: "The boys are friends" }, 
             { id: "q10", text: "My parents [input] here.", ans: "aren't", emoji: "🏠", audio: "My parents aren't here" },
             { id: "q11", text: "Lucas [input] tired.", ans: "is", emoji: "😓", audio: "Lucas is tired" },
             { id: "q12", text: "The cats [input] outside.", ans: "aren't", emoji: "🐱", audio: "The cats aren't outside" }
@@ -67,7 +68,7 @@
 
             document.getElementById(ex.id).addEventListener("input", function() {
                 let feedback = document.getElementById("f" + ex.id);
-                // Aceita a resposta ignorando espaços extras e letras maiúsculas/minúsculas
+                // Validação ignorando maiúsculas/minúsculas
                 if (this.value.trim().toLowerCase() === ex.ans.toLowerCase()) {
                     feedback.textContent = "✔";
                     feedback.className = "feedback ok";
