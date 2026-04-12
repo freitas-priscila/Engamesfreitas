@@ -19,20 +19,19 @@
         }
         
         #portal-screen { display: none; }
-        
-        h1, h2 { color: var(--gold); text-transform: uppercase; margin-bottom: 25px; }
+        h1, h2 { color: var(--gold); text-transform: uppercase; margin-bottom: 20px; }
         
         input { 
             width: 100%; 
             padding: 12px; 
-            margin: 15px 0; 
+            margin: 10px 0; 
             border-radius: 8px; 
             border: 2px solid #333; 
             background: #000; 
             color: white; 
             box-sizing: border-box; 
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         input:focus { border-color: var(--gold); outline: none; }
@@ -48,6 +47,7 @@
             width: 100%; 
             transition: 0.3s; 
             text-transform: uppercase;
+            margin-top: 15px;
         }
 
         .btn:hover { background: #ffdb4d; transform: scale(1.02); }
@@ -67,6 +67,7 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
+            text-align: center;
         }
 
         .game-button:hover { background: var(--gold); color: black; }
@@ -78,12 +79,14 @@
 
     <div id="login-screen">
         <h2>STUDENT VALIDATION</h2>
-        <input type="password" id="studentPass" placeholder="Enter Access Password">
+        <input type="text" id="studentName" placeholder="Nome do Aluno">
+        <input type="password" id="studentPass" placeholder="Senha de Acesso">
+        
         <button onclick="checkAccess()" class="btn">ENTRAR NO PORTAL</button>
     </div>
 
     <div id="portal-screen">
-        <h1>Learning Portal</h1>
+        <h1 id="welcome-msg">Learning Portal</h1>
         <div class="grid">
             <a href="family-members-1.html" class="game-button">Family Members 1</a>
             <a href="family-members-advanced.html" class="game-button">Family Advanced 1</a>
@@ -95,19 +98,23 @@
     </div>
 
     <script>
-        // Função para validar a senha única
         function checkAccess() {
+            const name = document.getElementById('studentName').value;
             const pass = document.getElementById('studentPass').value;
-            if (pass === "freitas2026") {
+
+            if (name.trim() !== "" && pass === "freitas2026") {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('portal-screen').style.display = 'block';
+                document.getElementById('welcome-msg').innerText = `Welcome, ${name}!`;
+            } else if (name.trim() === "") {
+                alert("Por favor, digite seu nome.");
             } else {
                 alert("Senha incorreta!");
             }
         }
 
-        // Permitir entrar apertando "Enter"
-        document.getElementById('studentPass').addEventListener('keypress', function (e) {
+        // Atalho tecla Enter
+        document.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 checkAccess();
             }
