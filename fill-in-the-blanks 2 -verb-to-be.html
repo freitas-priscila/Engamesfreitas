@@ -1,202 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Fill in the Blanks – Verb To Be</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fill in the Blanks – Verb To Be</title>
 
-<style>
-body{
-    background:black;
-    color:white;
-    font-family:Arial, sans-serif;
-    padding:20px;
-}
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-h1{
-    color:yellow;
-    text-align:center;
-}
+        h1 {
+            color: yellow;
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 2px solid yellow;
+            padding-bottom: 10px;
+        }
 
-.prompt{
-    border:2px solid yellow;
-    padding:15px;
-    margin-bottom:20px;
-    max-width:900px;
-    margin-inline:auto;
-}
+        .prompt {
+            border: 2px solid yellow;
+            padding: 20px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            background-color: #111;
+            border-radius: 15px;
+        }
 
-.card{
-    border:1px solid yellow;
-    padding:15px;
-    margin:12px auto;
-    max-width:850px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+        .card {
+            border: 1px solid yellow;
+            padding: 20px;
+            margin: 10px auto;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #0a0a0a;
+            border-radius: 10px;
+        }
 
-.emoji{
-    font-size:26px;
-}
+        .emoji { font-size: 30px; }
 
-input{
-    background:black;
-    color:yellow;
-    border:none;
-    border-bottom:2px solid yellow;
-    width:120px;
-    text-align:center;
-    font-size:18px;
-}
+        input {
+            background: transparent;
+            color: yellow;
+            border: none;
+            border-bottom: 2px solid yellow;
+            width: 100px;
+            text-align: center;
+            font-size: 20px;
+            outline: none;
+        }
 
-.feedback{
-    font-weight:bold;
-}
+        .feedback {
+            font-weight: bold;
+            font-size: 22px;
+            margin-left: auto;
+        }
 
-.ok{color:#00ff99;}
-.no{color:#ff5555;}
+        .ok { color: #00ff99; }
+        .no { color: #ff5555; }
 
-.audio{
-    cursor:pointer;
-    font-size:22px;
-}
-</style>
+        .audio {
+            cursor: pointer;
+            font-size: 24px;
+            transition: 0.2s;
+        }
+        
+        .audio:hover { transform: scale(1.2); }
+
+        .back-btn {
+            margin-top: 30px;
+            color: yellow;
+            text-decoration: none;
+            border: 1px solid yellow;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>🧩 Fill in the Blanks – Verb To Be<br>@freitasenglishclasses</h1>
+    <h1>🧩 Verb To Be Challenges</h1>
+    <p style="color: yellow; margin-top: -15px;">@freitasenglishclasses</p>
 
-<div class="prompt">
-<strong>Prompt:</strong><br>
-Use the correct form of <strong>Verb To Be</strong>:<br><br>
-<strong>'m not • aren't • isn't • is • Is • 're • are • Are • am • Am • not</strong><br><br>
-⚠️ Capital letters matter at the beginning of questions.
-</div>
+    <div class="prompt">
+        <strong>Instructions:</strong> Use the correct form of <strong>Verb To Be</strong>:<br><br>
+        <code style="color: yellow;">'m not • aren't • isn't • is • Is • 're • are • Are • am • Am</code><br><br>
+        ⚠️ Remember: Capital letters for the start of questions!
+    </div>
 
-<!-- WITH PRONOUNS – NO CONTRACTIONS -->
+    <div id="exercise-container"></div>
 
-<div class="card">
-<span class="audio" onclick="speak('I am ready.')">🔊</span>
-<span class="emoji">😀</span>
-I <input id="q1"> ready.
-<span id="f1" class="feedback"></span>
-</div>
+    <a href="index.html" class="back-btn">Back to Portal</a>
 
-<div class="card">
-<span class="audio" onclick="speak('She is not at home.')">🔊</span>
-<span class="emoji">🏠</span>
-She <input id="q2"> not at home.
-<span id="f2" class="feedback"></span>
-</div>
+    <script>
+        const exercises = [
+            { id: "q1", text: "I [input] ready.", ans: "am", emoji: "😀", audio: "I am ready." },
+            { id: "q2", text: "She [input] not at home.", ans: "is", emoji: "🏠", audio: "She is not at home." },
+            { id: "q3", text: "[input] you a teacher?", ans: "Are", emoji: "🎓", audio: "Are you a teacher?" },
+            { id: "q4", text: "They [input] tired.", ans: "are", emoji: "😴", audio: "They are tired." },
+            { id: "q5", text: "He [input] late.", ans: "is", emoji: "⏰", audio: "He is late." },
+            { id: "q6", text: "We [input] not students.", ans: "are", emoji: "📚", audio: "We are not students." },
+            { id: "q7", text: "Paulo and Maria [input] young.", ans: "aren't", emoji: "👴👵", audio: "Paulo and Maria aren't young." },
+            { id: "q8", text: "Anna [input] happy.", ans: "isn't", emoji: "🙁", audio: "Anna isn't happy." },
+            { id: "q9", text: "The boys [input] friends.", ans: "'re", emoji: "🤝", audio: "The boys are friends." },
+            { id: "q10", text: "My parents [input] here.", ans: "aren't", emoji: "🏠", audio: "My parents aren't here." },
+            { id: "q11", text: "Lucas [input] tired.", ans: "is", emoji: "😓", audio: "Lucas is tired." },
+            { id: "q12", text: "The cats [input] outside.", ans: "aren't", emoji: "🐱", audio: "The cats aren't outside." }
+        ];
 
-<div class="card">
-<span class="audio" onclick="speak('Are you a teacher?')">🔊</span>
-<span class="emoji">🎓</span>
-<input id="q3"> you a teacher?
-<span id="f3" class="feedback"></span>
-</div>
+        const container = document.getElementById('exercise-container');
 
-<div class="card">
-<span class="audio" onclick="speak('They are tired.')">🔊</span>
-<span class="emoji">😴</span>
-They <input id="q4"> tired.
-<span id="f4" class="feedback"></span>
-</div>
+        exercises.forEach((ex, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // Substitui o [input] pelo campo real
+            const content = ex.text.replace('[input]', `<input id="${ex.id}" autocomplete="off">`);
+            
+            card.innerHTML = `
+                <span class="audio" onclick="speak('${ex.audio}')">🔊</span>
+                <span class="emoji">${ex.emoji}</span>
+                <span>${content}</span>
+                <span id="f${ex.id}" class="feedback"></span>
+            `;
+            container.appendChild(card);
 
-<div class="card">
-<span class="audio" onclick="speak('He is late.')">🔊</span>
-<span class="emoji">⏰</span>
-He <input id="q5"> late.
-<span id="f5" class="feedback"></span>
-</div>
+            // Adiciona a lógica de verificação
+            document.getElementById(ex.id).addEventListener("input", function() {
+                let feedback = document.getElementById("f" + ex.id);
+                if (this.value.trim() === ex.ans) {
+                    feedback.textContent = "✔";
+                    feedback.className = "feedback ok";
+                } else if (this.value === "") {
+                    feedback.textContent = "";
+                } else {
+                    feedback.textContent = "✘";
+                    feedback.className = "feedback no";
+                }
+            });
+        });
 
-<div class="card">
-<span class="audio" onclick="speak('We are not students.')">🔊</span>
-<span class="emoji">📚</span>
-We <input id="q6"> not students.
-<span id="f6" class="feedback"></span>
-</div>
-
-<!-- WITHOUT PRONOUNS – WITH CONTRACTIONS -->
-
-<div class="card">
-<span class="audio" onclick="speak('Paulo and Maria are not young.')">🔊</span>
-<span class="emoji">👴👵</span>
-Paulo and Maria <input id="q7"> young.
-<span id="f7" class="feedback"></span>
-</div>
-
-<div class="card">
-<span class="audio" onclick="speak('Anna is not happy.')">🔊</span>
-<span class="emoji">🙁</span>
-Anna <input id="q8"> happy.
-<span id="f8" class="feedback"></span>
-</div>
-
-<div class="card">
-<span class="audio" onclick="speak('The boys are friends.')">🔊</span>
-<span class="emoji">🤝</span>
-The boys <input id="q9"> friends.
-<span id="f9" class="feedback"></span>
-</div>
-
-<div class="card">
-<span class="audio" onclick="speak('My parents are not here.')">🔊</span>
-<span class="emoji">🏠</span>
-My parents <input id="q10"> here.
-<span id="f10" class="feedback"></span>
-</div>
-
-<div class="card">
-<span class="audio" onclick="speak('Lucas is tired.')">🔊</span>
-<span class="emoji">😓</span>
-Lucas <input id="q11"> tired.
-<span id="f11" class="feedback"></span>
-</div>
-
-<div class="card">
-<span class="audio" onclick="speak('The cats are not outside.')">🔊</span>
-<span class="emoji">🐱</span>
-The cats <input id="q12"> outside.
-<span id="f12" class="feedback"></span>
-</div>
-
-<script>
-const answers = {
-q1:"am",
-q2:"is",
-q3:"Are",
-q4:"are",
-q5:"is",
-q6:"are",
-q7:"aren't",
-q8:"isn't",
-q9:"'re",
-q10:"aren't",
-q11:"is",
-q12:"aren't"
-};
-
-for(let q in answers){
-document.getElementById(q).addEventListener("input",function(){
-let f=document.getElementById("f"+q.substring(1));
-if(this.value.trim()===answers[q]){
-f.textContent="✔";
-f.className="feedback ok";
-}else{
-f.textContent="✘";
-f.className="feedback no";
-}
-});
-}
-
-function speak(text){
-let u=new SpeechSynthesisUtterance(text);
-u.lang="en-US";
-speechSynthesis.speak(u);
-}
-</script>
-
+        function speak(text) {
+            window.speechSynthesis.cancel(); // Para o áudio anterior se houver
+            let u = new SpeechSynthesisUtterance(text);
+            u.lang = "en-US";
+            u.rate = 0.9; // Um pouco mais lento para ficar didático
+            window.speechSynthesis.speak(u);
+        }
+    </script>
 </body>
 </html>
