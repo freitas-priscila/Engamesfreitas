@@ -1,145 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Memory Game – Occupations in English</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game – Occupations</title>
+    <style>
+        body { background-color: #000; color: #FFD700; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; }
+        h1 { margin: 10px 0; text-transform: uppercase; border-bottom: 2px solid #FFD700; display: inline-block; padding-bottom: 5px; }
+        h2 { font-size: 16px; color: #fff; margin-bottom: 20px; }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            max-width: 900px;
+            margin: auto;
+        }
 
-<style>
-    body {
-        background-color: #000;
-        color: #FFD700;
-        font-family: Arial, sans-serif;
-        text-align: center;
-    }
+        .card {
+            background-color: #111;
+            border: 2px solid #FFD700;
+            height: 100px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+            color: transparent; /* Esconde o texto inicialmente */
+        }
 
-    h1 {
-        margin: 20px 0 5px;
-    }
+        .card.revealed {
+            background-color: #FFD700;
+            color: #000;
+            transform: rotateY(180deg);
+        }
 
-    h2 {
-        font-weight: normal;
-        font-size: 16px;
-        color: #fff;
-        margin-bottom: 20px;
-    }
-
-    .game-board {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 12px;
-        max-width: 1000px;
-        margin: auto;
-    }
-
-    .card {
-        background-color: #000;
-        border: 2px solid #FFD700;
-        height: 120px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        user-select: none;
-        color: #fff;
-    }
-
-    .card.revealed {
-        background-color: #FFD700;
-        color: #000;
-        font-weight: bold;
-    }
-
-    .emoji {
-        font-size: 46px;
-    }
-</style>
+        .emoji { font-size: 40px; }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            color: #FFD700;
+            text-decoration: none;
+            border: 1px solid #FFD700;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
-
 <body>
 
-<h1>🧠 Memory Game – Occupations in English</h1>
-<h2>@freitasenglishclasses</h2>
-<p>Click and listen 👂</p>
+    <h1>🧠 Memory Game</h1>
+    <h2>Occupations in English - @freitasenglishclasses</h2>
+    <p style="color: #fff;">Click to find the pairs and listen! 👂</p>
 
-<div class="game-board" id="gameBoard"></div>
+    <div class="game-board" id="gameBoard"></div>
 
-<script>
-const pairs = [
-    { word: "a teacher", emoji: "👩‍🏫" },
-    { word: "a doctor", emoji: "👨‍⚕️" },
-    { word: "a student", emoji: "🎓" },
-    { word: "an engineer", emoji: "🛠️" },
-    { word: "a chef", emoji: "👨‍🍳" },
-    { word: "an admin assistant", emoji: "🗂️" },
-    { word: "a welder", emoji: "🔥" },
-    { word: "a virtual assistant", emoji: "💻" },
-    { word: "an influencer", emoji: "📱" },
-    { word: "a content creator", emoji: "🎥" },
-    { word: "a writer", emoji: "✍️" },
-    { word: "a secretary", emoji: "📞" },
-    { word: "an agronomist", emoji: "🌱" },
-    { word: "a farmer", emoji: "🚜" }
-];
+    <a href="index.html" class="back-btn">Back to Portal</a>
 
-let cards = [];
-pairs.forEach(pair => {
-    cards.push({ type: "word", content: pair.word, speak: pair.word });
-    cards.push({ type: "emoji", content: pair.emoji, speak: pair.word });
-});
+    <script>
+        const pairs = [
+            { word: "a teacher", emoji: "👩‍🏫" },
+            { word: "a doctor", emoji: "👨‍⚕️" },
+            { word: "a student", emoji: "🎓" },
+            { word: "an engineer", emoji: "🛠️" },
+            { word: "a chef", emoji: "👨‍🍳" },
+            { word: "an admin assistant", emoji: "🗂️" },
+            { word: "a welder", emoji: "🔥" },
+            { word: "a virtual assistant", emoji: "💻" },
+            { word: "an influencer", emoji: "📱" },
+            { word: "a content creator", emoji: "🎥" },
+            { word: "a writer", emoji: "✍️" },
+            { word: "a secretary", emoji: "📞" },
+            { word: "an agronomist", emoji: "🌱" },
+            { word: "a farmer", emoji: "🚜" }
+        ];
 
-cards.sort(() => Math.random() - 0.5);
+        let cardsData = [];
+        pairs.forEach(pair => {
+            cardsData.push({ type: "word", content: pair.word, speak: pair.word });
+            cardsData.push({ type: "emoji", content: pair.emoji, speak: pair.word });
+        });
 
-const board = document.getElementById("gameBoard");
-let firstCard = null;
-let lockBoard = false;
+        cardsData.sort(() => Math.random() - 0.5);
 
-cards.forEach(cardData => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+        const board = document.getElementById("gameBoard");
+        let firstCard = null;
+        let lockBoard = false;
 
-    card.addEventListener("click", () => {
-        if (lockBoard || card.classList.contains("revealed")) return;
+        cardsData.forEach(data => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.dataset.speak = data.speak;
 
-        card.classList.add("revealed");
-        card.innerHTML = cardData.type === "emoji"
-            ? `<span class="emoji">${cardData.content}</span>`
-            : cardData.content;
+            card.addEventListener("click", () => {
+                if (lockBoard || card.classList.contains("revealed")) return;
 
-        speak(cardData.speak);
+                card.classList.add("revealed");
+                card.innerHTML = data.type === "emoji" ? `<span class="emoji">${data.content}</span>` : data.content;
+                
+                speak(data.speak);
 
-        if (!firstCard) {
-            firstCard = { card, data: cardData };
-        } else {
-            lockBoard = true;
+                if (!firstCard) {
+                    firstCard = card;
+                } else {
+                    lockBoard = true;
+                    if (firstCard.dataset.speak === card.dataset.speak) {
+                        firstCard = null;
+                        lockBoard = false;
+                    } else {
+                        setTimeout(() => {
+                            card.classList.remove("revealed");
+                            card.innerHTML = "";
+                            firstCard.classList.remove("revealed");
+                            firstCard.innerHTML = "";
+                            firstCard = null;
+                            lockBoard = false;
+                        }, 1000);
+                    }
+                }
+            });
+            board.appendChild(card);
+        });
 
-            if (firstCard.data.speak === cardData.speak &&
-                firstCard.card !== card) {
-                firstCard = null;
-                lockBoard = false;
-            } else {
-                setTimeout(() => {
-                    card.classList.remove("revealed");
-                    card.innerHTML = "";
-                    firstCard.card.classList.remove("revealed");
-                    firstCard.card.innerHTML = "";
-                    firstCard = null;
-                    lockBoard = false;
-                }, 1300);
-            }
+        function speak(text) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = "en-US";
+            window.speechSynthesis.speak(utterance);
         }
-    });
-
-    board.appendChild(card);
-});
-
-function speak(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-US";
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utterance);
-}
-</script>
-
+    </script>
 </body>
 </html>
