@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +7,8 @@
     <style>
         :root {
             --bg-color: #000000;
-            --card-back: #ffcc00; /* Amarelo */
-            --card-front: #1a1a1a; /* Preto */
+            --card-back: #ffcc00;
+            --card-front: #1a1a1a;
             --text-white: #ffffff;
             --text-yellow: #ffcc00;
             --border-color: #ffcc00;
@@ -91,7 +91,6 @@
         .emoji { font-size: 40px; margin-bottom: 10px; }
         .label { font-weight: bold; text-align: center; font-size: 0.95rem; }
         
-        /* Cores solicitadas para as letras */
         .en-text { color: var(--text-white); }
         .pt-text { color: var(--text-yellow); }
 
@@ -145,9 +144,9 @@
         let flippedCards = [];
         let canFlip = true;
 
-        function speak(text, lang) {
+        function speakEnglish(text) {
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang; // 'en-US' ou 'pt-BR'
+            utterance.lang = 'en-US';
             utterance.rate = 0.9;
             window.speechSynthesis.speak(utterance);
         }
@@ -157,20 +156,18 @@
             grid.innerHTML = '';
             cards = [];
             
-            // Criamos dois cards para cada item da lista
             familyPairs.forEach(item => {
                 cards.push({ ...item, type: 'en', display: item.en });
                 cards.push({ ...item, type: 'pt', display: item.pt });
             });
 
-            // Embaralhar
             cards.sort(() => Math.random() - 0.5);
 
             cards.forEach((cardData, index) => {
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.dataset.index = index;
-                card.dataset.match = cardData.en; // Usamos o inglês como chave de match
+                card.dataset.match = cardData.en;
 
                 card.innerHTML = `
                     <div class="card-inner">
@@ -194,9 +191,10 @@
 
             cardElement.classList.add('flipped');
             
-            // Pronúncia
-            const lang = data.type === 'en' ? 'en-US' : 'pt-BR';
-            speak(data.display, lang);
+            // 🔊 SOMENTE INGLÊS
+            if (data.type === 'en') {
+                speakEnglish(data.display);
+            }
 
             flippedCards.push({ element: cardElement, data: data });
 
@@ -210,11 +208,9 @@
             const [card1, card2] = flippedCards;
 
             if (card1.data.en === card2.data.en && card1.data.type !== card2.data.type) {
-                // Match deu certo
                 flippedCards = [];
                 canFlip = true;
             } else {
-                // Errou
                 setTimeout(() => {
                     card1.element.classList.remove('flipped');
                     card2.element.classList.remove('flipped');
