@@ -29,15 +29,20 @@
 
     <script>
         const vocabulary = [
-            { en: "Great grandparents", pt: "Bisavós", icon: "👵👴" },
-            { en: "Great grandson", pt: "Bisneto", icon: "👶" },
-            { en: "Great granddaughter", pt: "Bisneta", icon: "👧" },
-            { en: "Mother in law", pt: "Sogra", icon: "💍" },
-            { en: "Father in law", pt: "Sogro", icon: "👔" },
-            { en: "Parents in law", pt: "Sogros", icon: "👪" },
-            { en: "Brother in law", pt: "Cunhado", icon: "🤝" },
-            { en: "Sister in law", pt: "Cunhada", icon: "👗" },
-            { en: "Son in law", pt: "Genro", icon: "🤵" }
+    { en: "Mother-in-law", pt: "Sogra", icon: "💍" },
+    { en: "Father-in-law", pt: "Sogro", icon: "👔" },
+    { en: "Parents-in-law", pt: "Sogros", icon: "👪" },
+    { en: "Brother-in-law", pt: "Cunhado", icon: "🤝" },
+    { en: "Sister-in-law", pt: "Cunhada", icon: "👗" },
+    { en: "Son-in-law", pt: "Genro", icon: "🤵" },
+    { en: "Daughter-in-law", pt: "Nora", icon: "👰" },
+    { en: "Siblings-in-law", pt: "Cunhados", icon: "👥" },
+    { en: "Nephew", pt: "Sobrinho", icon: "👦" },
+    { en: "Niece", pt: "Sobrinha", icon: "👧" },
+    { en: "Nephew and Niece", pt: "Sobrinho e Sobrinha", icon: "🧒" },
+    { en: "Uncle", pt: "Tio", icon: "👴" },
+    { en: "Aunt", pt: "Tia", icon: "👵" },
+    { en: "Cousin", pt: "Primo(a)", icon: "🧒" }
         ];
 
         let flipped = [], lock = false;
