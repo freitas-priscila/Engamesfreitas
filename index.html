@@ -22,52 +22,30 @@
         h1, h2 { color: var(--gold); text-transform: uppercase; margin-bottom: 20px; }
         
         input { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 10px 0; 
-            border-radius: 8px; 
-            border: 2px solid #333; 
-            background: #000; 
-            color: white; 
-            box-sizing: border-box; 
-            text-align: center;
-            font-size: 1rem;
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; 
+            border: 2px solid #333; background: #000; color: white; 
+            box-sizing: border-box; text-align: center; font-size: 1rem;
         }
-
-        input:focus { border-color: var(--gold); outline: none; }
 
         .btn { 
-            background: var(--gold); 
-            color: black; 
-            border: none; 
-            padding: 14px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            border-radius: 8px; 
-            width: 100%; 
-            transition: 0.3s; 
-            text-transform: uppercase;
-            margin-top: 15px;
+            background: var(--gold); color: black; border: none; padding: 14px; 
+            font-weight: bold; cursor: pointer; border-radius: 8px; width: 100%; 
+            transition: 0.3s; text-transform: uppercase; margin-top: 15px;
         }
 
-        .btn:hover { background: #ffdb4d; transform: scale(1.02); }
-
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
+        /* Grade de 2 colunas para os 6 jogos */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+            margin-top: 30px; 
+        }
         
         .game-button { 
-            background: #222; 
-            color: var(--gold); 
-            text-decoration: none; 
-            padding: 18px; 
-            border: 2px solid var(--gold); 
-            border-radius: 10px; 
-            font-weight: bold; 
-            font-size: 0.9rem; 
-            transition: 0.3s; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center;
+            background: #1a1a1a; color: var(--gold); text-decoration: none; 
+            padding: 15px; border: 1.5px solid var(--gold); border-radius: 8px; 
+            font-weight: bold; font-size: 0.85rem; transition: 0.3s; 
+            display: flex; align-items: center; justify-content: center; text-align: center;
         }
 
         .game-button:hover { background: var(--gold); color: black; }
@@ -81,12 +59,11 @@
         <h2>STUDENT VALIDATION</h2>
         <input type="text" id="studentName" placeholder="Nome do Aluno">
         <input type="password" id="studentPass" placeholder="Senha de Acesso">
-        
         <button onclick="checkAccess()" class="btn">ENTRAR NO PORTAL</button>
     </div>
 
     <div id="portal-screen">
-        <h1 id="welcome-msg">Learning Portal</h1>
+        <h2 id="welcome-msg" style="color: var(--gold);">WELCOME!</h2>
         <div class="grid">
             <a href="family-members-1.html" class="game-button">Family Members 1</a>
             <a href="family-members-advanced.html" class="game-button">Family Advanced 1</a>
@@ -105,20 +82,11 @@
             if (name.trim() !== "" && pass === "freitas2026") {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('portal-screen').style.display = 'block';
-                document.getElementById('welcome-msg').innerText = `Welcome, ${name}!`;
-            } else if (name.trim() === "") {
-                alert("Por favor, digite seu nome.");
+                document.getElementById('welcome-msg').innerText = `WELCOME, ${name.toUpperCase()}!`;
             } else {
-                alert("Senha incorreta!");
+                alert("Verifique seu nome e senha.");
             }
         }
-
-        // Atalho tecla Enter
-        document.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                checkAccess();
-            }
-        });
     </script>
 </body>
 </html>
