@@ -5,82 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freitas English Classes - Portal</title>
     <style>
+        :root {
+            --bg-color: #000000;
+            --box-bg: #1a1a1a;
+            --text-yellow: #ffcc00;
+            --btn-hover: #ffdb4d;
+        }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #000;
-            color: #fff;
-            margin: 0;
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            margin: 0;
         }
-        #login-screen { text-align: center; width: 90%; max-width: 400px; }
-        .login-box { border: 2px solid yellow; padding: 35px; border-radius: 20px; background-color: #111; box-shadow: 0 0 15px rgba(255, 255, 0, 0.2); }
-        h2 { color: yellow; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid yellow; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; }
-        .btn { width: 100%; padding: 15px; background-color: yellow; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 16px; }
-        .btn:hover { background-color: #ffeb3b; }
-        #portal-screen { display: none; width: 90%; max-width: 600px; padding: 30px 0; }
-        .game-button { display: block; text-decoration: none; border: 2px solid yellow; border-radius: 15px; margin-bottom: 15px; padding: 20px; transition: 0.2s; background: rgba(255,255,0,0.02); }
-        .game-button:hover { background-color: #1a1a1a; transform: scale(1.02); }
-        .game-title { color: yellow; font-weight: bold; font-size: 1.1rem; display: block; text-align: center; }
-        h1 { color: yellow; text-align: center; border-bottom: 2px solid yellow; padding-bottom: 10px; margin-bottom: 30px; }
+
+        h1 {
+            color: var(--text-yellow);
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--text-yellow);
+            margin-bottom: 30px;
+        }
+
+        #login-screen, #portal-screen {
+            background: var(--box-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        #portal-screen { display: none; max-width: 800px; }
+
+        .btn {
+            background: var(--text-yellow);
+            color: black;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: var(--btn-hover); transform: scale(1.02); }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background: #222;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .grid-portal {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .game-button {
+            background: #222;
+            color: var(--text-yellow);
+            text-decoration: none;
+            padding: 20px;
+            border: 2px solid var(--text-yellow);
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-button:hover {
+            background: var(--text-yellow);
+            color: black;
+        }
+
+        iframe { display: none; }
     </style>
 </head>
 <body>
 
-<div id="login-screen">
-    <div class="login-box">
+    <div id="login-screen">
         <h2>STUDENT VALIDATION</h2>
-        <form id="accessForm" action="https://docs.google.com/forms/d/e/1FAIpQLScYp-Yv86T_O4iQkR_p13p_I8V-v2yWf9Z0f7j9Y3Z_Z-Z-Z/formResponse" method="POST" target="hidden_iframe">
-            
-            <input type="text" name="entry.938744808" id="studentName" placeholder="Seu Nome Completo" required>
+        <form id="accessForm" action="https://docs.google.com/forms/d/e/1FAIpQLScYpYv86T_04IQkR_p13p_I8V-v2yW920f7j9Y3Z_2-2/formResponse" method="POST" target="hidden_iframe">
+            <input type="text" name="entry.938744888" id="studentName" placeholder="Seu Nome Completo" required>
             <input type="password" id="studentPass" placeholder="Senha de Acesso" required>
-            
             <button type="submit" class="btn">ENTRAR NO PORTAL</button>
         </form>
-        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="checkRedirect()"></iframe>
+        <iframe name="hidden_iframe" id="hidden_iframe" onload="checkRedirect()"></iframe>
     </div>
-</div>
 
-<div id="portal-screen">
-    <h1>Learning Portal</h1>
-    <a href="family-members-1.html" class="game-button"><span class="game-title">Family Members 1</span></a>
-    <a href="family-members-advanced.html" class="game-button"><span class="game-title">Family Members Advanced</span></a>
-    
-    <a href="verb-to-be.html" class="game-button"><span class="game-title">Verb to Be</span></a>
-    
-    <a href="memory-game-adjectives-people.html" class="game-button"><span class="game-title">Adjectives: People</span></a>
-    <a href="occupations.html" class="game-button"><span class="game-title">Occupations</span></a>
-    <a href="corporate-match.html" class="game-button"><span class="game-title">Corporate Match</span></a>
-    <a href="phrasal-verbs1-game.html" class="game-button"><span class="game-title">Phrasal Verbs</span></a>
-    <a href="as-varias-formas-de-bring.html" class="game-button"><span class="game-title">Bring (20 Challenges)</span></a>
-</div>
+    <div id="portal-screen">
+        <h1>Learning Portal</h1>
+        <div class="grid-portal">
+            <a href="family-members-1.html" class="game-button">Family Members 1</a>
+            <a href="family-members-advanced.html" class="game-button">Family Advanced 1</a>
+            <a href="family-members-advanced-2.html" class="game-button">Family Advanced 2</a>
+            
+            <a href="verb-to-be.html" class="game-button">Verb to Be</a>
+            <a href="occupations.html" class="game-button">Occupations</a>
+            <a href="memory-game-adjectives-people.html" class="game-button">Adjectives: People</a>
+            <a href="corporate-match.html" class="game-button">Corporate Match</a>
+            <a href="phrasal-verbs-game.html" class="game-button">Phrasal Verbs</a>
+            <a href="as-varias-formas-de-bring.html" class="game-button">Bring Challenges</a>
+        </div>
+    </div>
 
-<script>
-    var formSubmitted = false;
+    <script>
+        var formSubmitted = false;
 
-    document.getElementById('accessForm').onsubmit = function(e) {
-        var passwordInput = document.getElementById('studentPass').value;
-        if (passwordInput === "s_tudent2026") {
-            formSubmitted = true;
-            return true;
-        } else {
-            alert("Senha incorreta!");
-            return false;
+        document.getElementById('accessForm').onsubmit = function(e) {
+            var passwordInput = document.getElementById('studentPass').value;
+            if (passwordInput === "Student2026") { // Sua senha
+                formSubmitted = true;
+                return true;
+            } else {
+                alert("Senha incorreta!");
+                return false;
+            }
+        };
+
+        function checkRedirect() {
+            if (formSubmitted) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('portal-screen').style.display = 'block';
+            }
         }
-    };
-
-    function checkRedirect() {
-        if (formSubmitted) {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('portal-screen').style.display = 'block';
-            document.body.style.justifyContent = 'flex-start';
-        }
-    }
-</script>
-
+    </script>
 </body>
 </html>
