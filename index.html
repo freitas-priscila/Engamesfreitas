@@ -22,6 +22,7 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
+            padding: 20px;
         }
 
         h1 {
@@ -29,6 +30,7 @@
             text-transform: uppercase;
             border-bottom: 2px solid var(--text-yellow);
             margin-bottom: 30px;
+            text-align: center;
         }
 
         #login-screen, #portal-screen {
@@ -37,11 +39,12 @@
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
             text-align: center;
-            width: 90%;
-            max-width: 500px;
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
         }
 
-        #portal-screen { display: none; max-width: 800px; }
+        #portal-screen { display: none; }
 
         .btn {
             background: var(--text-yellow);
@@ -69,9 +72,10 @@
             box-sizing: border-box;
         }
 
+        /* ESTA PARTE ORGANIZA OS BOTÕES EM COLUNAS */
         .grid-portal {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* 2 colunas no PC */
             gap: 15px;
             margin-top: 20px;
         }
@@ -80,7 +84,7 @@
             background: #222;
             color: var(--text-yellow);
             text-decoration: none;
-            padding: 20px;
+            padding: 15px;
             border: 2px solid var(--text-yellow);
             border-radius: 10px;
             font-weight: bold;
@@ -88,6 +92,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.9rem;
         }
 
         .game-button:hover {
@@ -96,6 +101,11 @@
         }
 
         iframe { display: none; }
+
+        /* Ajuste para celulares (1 coluna só) */
+        @media (max-width: 600px) {
+            .grid-portal { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -116,7 +126,6 @@
             <a href="family-members-1.html" class="game-button">Family Members 1</a>
             <a href="family-members-advanced.html" class="game-button">Family Advanced 1</a>
             <a href="family-members-advanced-2.html" class="game-button">Family Advanced 2</a>
-            
             <a href="verb-to-be.html" class="game-button">Verb to Be</a>
             <a href="occupations.html" class="game-button">Occupations</a>
             <a href="memory-game-adjectives-people.html" class="game-button">Adjectives: People</a>
@@ -131,7 +140,7 @@
 
         document.getElementById('accessForm').onsubmit = function(e) {
             var passwordInput = document.getElementById('studentPass').value;
-            if (passwordInput === "Student2026") { // Sua senha
+            if (passwordInput === "Student2026") { 
                 formSubmitted = true;
                 return true;
             } else {
