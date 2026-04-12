@@ -34,10 +34,9 @@
 <div id="login-screen">
     <div class="login-box">
         <h2>STUDENT VALIDATION</h2>
-        <form id="accessForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdDRDWrYgWb8wX8N9B2xWYtzFxsX2JQg4rp8hMdbcxYO_ixzQ/formResponse" method="POST" target="hidden_iframe">
+        <form id="accessForm" action="https://docs.google.com/forms/d/e/1FAIpQLScYp-Yv86T_O4iQkR_p13p_I8V-v2yWf9Z0f7j9Y3Z_Z-Z-Z/formResponse" method="POST" target="hidden_iframe">
             
             <input type="text" name="entry.938744808" id="studentName" placeholder="Seu Nome Completo" required>
-            
             <input type="password" id="studentPass" placeholder="Senha de Acesso" required>
             
             <button type="submit" class="btn">ENTRAR NO PORTAL</button>
@@ -50,7 +49,9 @@
     <h1>Learning Portal</h1>
     <a href="family-members-1.html" class="game-button"><span class="game-title">Family Members 1</span></a>
     <a href="family-members-advanced.html" class="game-button"><span class="game-title">Family Members Advanced</span></a>
-    <a href="fill-in-the-blanks-2-verb-to-be.html" class="game-button"><span class="game-title">Verb to Be</span></a>
+    
+    <a href="verb-to-be.html" class="game-button"><span class="game-title">Verb to Be</span></a>
+    
     <a href="memory-game-adjectives-people.html" class="game-button"><span class="game-title">Adjectives: People</span></a>
     <a href="memory-game-occupations-freitasenglishclass.html" class="game-button"><span class="game-title">Occupations</span></a>
     <a href="corporate-match.html" class="game-button"><span class="game-title">Corporate Match</span></a>
@@ -61,21 +62,17 @@
 <script>
     var formSubmitted = false;
 
-    // Função de validação de senha e permissão de envio
     document.getElementById('accessForm').onsubmit = function(e) {
         var passwordInput = document.getElementById('studentPass').value;
-        
-        // Validação da senha aluno
         if (passwordInput === "s_tudent2026") {
             formSubmitted = true;
-            return true; // Envia o nome para o Google Sheets de presença
+            return true;
         } else {
             alert("Senha incorreta!");
-            return false; // Bloqueia o acesso e o envio
+            return false;
         }
     };
 
-    // Função que esconde o login e mostra os jogos após o envio do form
     function checkRedirect() {
         if (formSubmitted) {
             document.getElementById('login-screen').style.display = 'none';
