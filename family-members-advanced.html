@@ -3,59 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Members 2 Advanced - Memory Game</title>
+    <title>Family Members Advanced - Memory Game</title>
     <style>
         :root {
             --bg-color: #000000;
-            --card-back: #000000;
+            --card-back: #1a1a1a;
             --card-front: #ffcc00; 
-            --text-white: #ffffff;
             --text-yellow: #ffcc00;
-            --border-yellow: #ffcc00;
-            --match-green: #4CAF50;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-white);
+            color: white;
             font-family: 'Segoe UI', Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
             margin: 0;
-            min-height: 100vh;
         }
 
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { color: var(--text-yellow); margin: 5px 0; text-transform: uppercase; border-bottom: 2px solid var(--text-yellow); padding-bottom: 5px; font-size: 2.2rem;}
-        p { color: var(--text-white); margin: 5px 0; font-size: 1.1rem; }
+        h1 { color: var(--text-yellow); text-transform: uppercase; border-bottom: 2px solid var(--text-yellow); margin-bottom: 10px; }
+        .subtitle { margin-bottom: 30px; text-align: center; }
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(7, 1fr); /* 7 cartas por linha no PC */
-            gap: 15px;
-            max-width: 1100px;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            max-width: 1000px;
             width: 95%;
             perspective: 1000px;
         }
 
         .card {
-            height: 150px;
+            height: 140px;
             cursor: pointer;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.6s;
-            border-radius: 10px;
+            transition: transform 0.5s;
         }
 
-        /* Estado virado */
-        .card.flipped {
-            transform: rotateY(180deg);
-        }
+        .card.flipped { transform: rotateY(180deg); }
 
-        /* Estilo comum para Frente e Verso */
-        .card-front, .card-back {
+        .face {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -64,71 +54,50 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
-            border: 2px solid var(--border-yellow);
+            border-radius: 8px;
+            border: 2px solid var(--text-yellow);
             padding: 10px;
             box-sizing: border-box;
             text-align: center;
             font-weight: bold;
         }
 
-        /* Frente (O Verso do Jogo - Preto) */
-        .card-front {
-            background-color: var(--card-back);
-            color: var(--text-yellow);
-            font-size: 2.5rem;
-        }
-
-        /* Verso (A Face Revelada - Amarela) */
-        .card-back {
-            background-color: var(--card-front);
-            color: #000000;
-            transform: rotateY(180deg); /* Crucial: Pré-inverte a face */
-            font-size: 0.85rem;
-        }
-
-        .emoji { font-size: 2.5rem; margin-bottom: 8px; }
-
-        /* Estado de MATCH: Fica verde e permanece virado */
-        .card.matched .card-back {
-            border-color: var(--match-green);
-            opacity: 0.6;
-        }
-
-        .controls { margin-top: 40px; display: flex; gap: 20px; }
+        .back { background-color: var(--card-back); color: var(--text-yellow); font-size: 2rem; }
         
+        .front { 
+            background-color: var(--card-front); 
+            color: black; 
+            transform: rotateY(180deg); 
+            font-size: 0.85rem; 
+        }
+
+        .card.matched { cursor: default; }
+        .card.matched .front { border-color: #4CAF50; opacity: 0.7; }
+
+        .emoji { font-size: 2.2rem; margin-bottom: 5px; }
+
+        .controls { margin-top: 30px; display: flex; gap: 15px; }
         .btn {
             background: var(--text-yellow);
             color: black;
             border: none;
-            padding: 12px 30px;
+            padding: 10px 25px;
             font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
             text-decoration: none;
-            font-size: 1rem;
-            transition: 0.2s;
         }
-        
-        .btn:hover { background-color: #ffdb4d; transform: scale(1.05); }
 
-        /* Responsividade para Celulares */
         @media (max-width: 768px) {
-            .game-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
-            .card { height: 110px; }
-            .emoji { font-size: 45px; }
-            .card-back { font-size: 11px; }
-            h1 { font-size: 1.5rem; }
+            .game-grid { grid-template-columns: repeat(4, 1fr); }
+            .card { height: 100px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Family Members 2 Advanced</h1>
-        <p>@freitasenglishclasses - Teacher: Priscila Freitas</p>
-        <p style="font-size: 0.9rem; color: #aaa;">Click to find pairs. English cards have audio! 👂</p>
-    </header>
+    <h1>Family Members Advanced</h1>
+    <div class="subtitle">@freitasenglishclasses<br>Click to find pairs! English cards have audio! 👂</div>
 
     <div class="game-grid" id="grid"></div>
 
@@ -159,75 +128,71 @@
             { en: "An only child", pt: "Filho único", icon: "🧍" }
         ];
 
-        let flippedCards = [];
-        let matchedPairs = 0;
-        let lockBoard = false;
+        let flipped = [];
+        let lock = false;
 
-        function speak(text, type) {
-            if (type === 'pt') return; // Sem áudio para português
+        function speak(text, isEn) {
+            if (!isEn) return;
             window.speechSynthesis.cancel();
-            
-            // Limpa o texto: remove "/" e "()"
-            let cleanText = text.replace(/\//g, " and ").replace(/\(/g, "").replace(/\)/g, "");
-            
+            const cleanText = text.replace(/\//g, " and ").replace(/\(/g, "").replace(/\)/g, "");
             const msg = new SpeechSynthesisUtterance(cleanText);
             msg.lang = 'en-US';
-            msg.rate = 0.9;
             window.speechSynthesis.speak(msg);
         }
 
         function startGame() {
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            flippedCards = [];
-            matchedPairs = 0;
-            lockBoard = false;
+            flipped = [];
+            lock = false;
 
-            let cardData = [];
-            vocabulary.forEach((item, index) => {
-                cardData.push({ text: item.en, type: 'en', id: index, icon: item.icon });
-                cardData.push({ text: item.pt, type: 'pt', id: index, icon: item.icon });
+            let cards = [];
+            vocabulary.forEach((item, i) => {
+                cards.push({ text: item.en, type: 'en', id: i, icon: item.icon });
+                cards.push({ text: item.pt, type: 'pt', id: i, icon: item.icon });
             });
 
-            // Embaralha as cartas
-            cardData.sort(() => Math.random() - 0.5);
+            cards.sort(() => Math.random() - 0.5);
 
-            cardData.forEach(data => {
+            cards.forEach(data => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                card.dataset.id = data.id;
-                card.dataset.type = data.type;
-                card.dataset.speak = data.text;
-
                 card.innerHTML = `
-                    <div class="card-front">?</div>
-                    <div class="card-back">
+                    <div class="face back">?</div>
+                    <div class="face front">
                         <span class="emoji">${data.icon}</span>
                         <span>${data.text}</span>
                     </div>
                 `;
-                
-                card.addEventListener('click', flipCard);
+                card.onclick = () => {
+                    if (lock || card.classList.contains('flipped')) return;
+                    card.classList.add('flipped');
+                    speak(data.text, data.type === 'en');
+                    flipped.push({ el: card, data: data });
+
+                    if (flipped.length === 2) {
+                        lock = true;
+                        const [c1, c2] = flipped;
+                        if (c1.data.id === c2.data.id && c1.data.type !== c2.data.type) {
+                            c1.el.classList.add('matched');
+                            c2.el.classList.add('matched');
+                            flipped = [];
+                            lock = false;
+                        } else {
+                            setTimeout(() => {
+                                c1.el.classList.remove('flipped');
+                                c2.el.classList.remove('flipped');
+                                flipped = [];
+                                lock = false;
+                            }, 1000);
+                        }
+                    }
+                };
                 grid.appendChild(card);
             });
         }
 
-        function flipCard() {
-            if (lockBoard || this === flippedCards[0] || this.classList.contains('matched')) return;
-
-            this.classList.add('flipped');
-            speak(this.dataset.speak, this.dataset.type);
-
-            flippedCards.push(this);
-
-            if (flippedCards.length === 2) {
-                checkMatch();
-            }
-        }
-
-        function checkMatch() {
-            lockBoard = true;
-            let [c1, c2] = flippedCards;
-
-            // Verifica se os IDs são iguais (o par certo) e os tipos são diferentes (EN vs PT)
-            if (c1.dataset.id === c2.dataset.id && c1.dataset.type !== c2.
+        startGame();
+    </script>
+</body>
+</html>
