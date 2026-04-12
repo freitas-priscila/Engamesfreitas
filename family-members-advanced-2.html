@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Members Advanced 2</title>
+    <title>Family Advanced 2</title>
     <style>
         :root { --bg: #000; --gold: #ffcc00; --card-bg: #1a1a1a; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; }
-        h1 { color: var(--gold); text-transform: uppercase; border-bottom: 2px solid var(--gold); display: inline-block; font-size: 2rem; }
-        .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; max-width: 900px; margin: 20px auto; perspective: 1000px; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: var(--gold); text-transform: uppercase; border-bottom: 2px solid var(--gold); display: inline-block; margin-top: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; max-width: 1000px; margin: 20px auto; perspective: 1000px; }
         .card { height: 130px; cursor: pointer; position: relative; transform-style: preserve-3d; transition: transform 0.5s; }
         .card.flipped { transform: rotateY(180deg); }
-        .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; border: 2px solid var(--gold); padding: 5px; box-sizing: border-box; }
+        .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; border: 2px solid var(--gold); padding: 5px; box-sizing: border-box; text-align: center; font-weight: bold; }
         .back { background: var(--card-bg); color: var(--gold); font-size: 2rem; }
-        .front { background: var(--gold); color: black; transform: rotateY(180deg); font-size: 0.85rem; font-weight: bold; }
-        .card.matched .front { border-color: #4CAF50; opacity: 0.7; }
-        .emoji { font-size: 2.2rem; margin-bottom: 5px; }
-        .btn { background: var(--gold); color: black; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin: 10px; border: none; cursor: pointer; }
-        @media (max-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); } .card { height: 110px; } }
+        .front { background: var(--gold); color: black; transform: rotateY(180deg); font-size: 0.85rem; }
+        .emoji { font-size: 1.8rem; margin-bottom: 5px; }
+        .controls { margin-top: 30px; }
+        .btn { background: var(--gold); color: black; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin: 5px; border: none; cursor: pointer; }
+        @media (max-width: 800px) { .grid { grid-template-columns: repeat(4, 1fr); } }
     </style>
 </head>
 <body>
-    <h1>Family Advanced 2</h1>
-    <p>Step-families, Godparents and more!</p>
+    <h1>Family Members Advanced 2</h1>
+    <p>Steps, Godparents & Generations</p>
     <div class="grid" id="grid"></div>
     <div class="controls">
         <button class="btn" onclick="start()">Reset Game</button>
@@ -31,15 +31,20 @@
 
     <script>
         const vocabulary = [
-            { en: "Fiancé and Fiancée", pt: "Noivo e Noiva", icon: "🥂" },
-            { en: "Partner", pt: "Parceiro(a)", icon: "❤️" },
-            { en: "Godmother and Godfather", pt: "Madrinha e Padrinho", icon: "✨" },
-            { en: "Godchild", pt: "Afilhado(a)", icon: "👼" },
             { en: "Stepparents", pt: "Padrasto e Madrasta", icon: "🏠" },
-            { en: "Stepbrother and Stepsister", pt: "Irmãos de consideração", icon: "👫" },
-            { en: "Half brother and Half sister", pt: "Meio-irmãos de sangue", icon: "🧬" },
-            { en: "Foster child", pt: "Filho adotivo", icon: "💟" },
-            { en: "An only child", pt: "Filho único", icon: "🧍" }
+            { en: "Stepfather", pt: "Padrasto", icon: "👨" },
+            { en: "Stepmother", pt: "Madrasta", icon: "👩" },
+            { en: "Stepbrother", pt: "Irmão de consideração", icon: "👦" },
+            { en: "Stepsister", pt: "Irmã de consideração", icon: "👧" },
+            { en: "Half-brother", pt: "Meio-irmão", icon: "🧬" },
+            { en: "Half-sister", pt: "Meia-irmã", icon: "🧬" },
+            { en: "Godmother", pt: "Madrinha", icon: "✨" },
+            { en: "Godfather", pt: "Padrinho", icon: "✨" },
+            { en: "Godchild", pt: "Afilhado(a)", icon: "👼" },
+            { en: "Fiancé", pt: "Noivo", icon: "🥂" },
+            { en: "Fiancée", pt: "Noiva", icon: "🥂" },
+            { en: "Great-grandparents", pt: "Bisavós", icon: "👴👵" },
+            { en: "Great-grandchildren", pt: "Bisnetos", icon: "👶" }
         ];
 
         let flipped = [], lock = false;
@@ -47,8 +52,7 @@
         function speak(text, isEn) {
             if (!isEn) return;
             window.speechSynthesis.cancel();
-            const cleanText = text.replace(/and/g, "&").replace(/\//g, " ").replace(/\(/g, "").replace(/\)/g, "");
-            const msg = new SpeechSynthesisUtterance(cleanText);
+            const msg = new SpeechSynthesisUtterance(text);
             msg.lang = 'en-US';
             window.speechSynthesis.speak(msg);
         }
@@ -75,11 +79,9 @@
                     if (flipped.length === 2) {
                         lock = true;
                         if (flipped[0].data.id === flipped[1].data.id && flipped[0].data.type !== flipped[1].data.type) {
-                            flipped[0].el.classList.add('matched');
-                            flipped[1].el.classList.add('matched');
                             flipped = []; lock = false;
                         } else {
-                            setTimeout(() => { flipped.forEach(c => c.el.classList.remove('flipped')); flipped = []; lock = false; }, 1200);
+                            setTimeout(() => { flipped.forEach(c => c.el.classList.remove('flipped')); flipped = []; lock = false; }, 1000);
                         }
                     }
                 };
